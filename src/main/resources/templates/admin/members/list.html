@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>List Members</title>
+	<link rel="stylesheet" href="../static/css/admin/members/list.css" th:href="@{/css/admin/members/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+	<h2>Members</h2>
+	<div class="table-responsive">
+    	<table class="table table-striped table-bordered">
+			<thead> 
+				<tr> 
+					<th>#</th> 
+					<th>Name</th> 
+					<th>Email</th> 
+					<th>Role</th>
+					<th>Posts By Members</th>
+					<th>View</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr th:each="member, iterationStatus : ${members}">
+					<td th:text="${iterationStatus.count}">1</td>
+					<td th:text="${member.name}">Name</td>
+					<td th:text="${member.email}">Email Address</td>
+					<td th:text="${member.role}">Role</td>
+					<td><a th:href="|/posts/byMember/${member.memberId}|">Posts By Member</a></td>
+					<td><a href="#" th:href="@{/admin/members/} + ${member.memberId}">View</a></td>
+					<td><a href="#" th:href="@{/admin/members/edit/} + ${member.memberId}">Edit</a></td>
+					<td><a href="#" th:href="@{/admin/members/delete/} + ${member.memberId}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<br/>
+		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color"  href="/admin/member/create" th:href="@{/admin/member/create}">Create New Member</a></button>
+
+	</div>
+		
+</body>
+</html>

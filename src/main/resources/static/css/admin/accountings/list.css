@@ -1,0 +1,17 @@
+#insideDiv {
+	background-color:white; padding-left:2rem;
+	font-size:1rem;
+}
+
+tr th{
+	font-size:.8rem;
+	align:left;
+}
+
+table { table-layout: fixed; }
+
+td { width: 33%; }
+
+#totalBudget {
+	font-size: 3rem;
+}

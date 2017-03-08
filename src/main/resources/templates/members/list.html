@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>Member List</title>
+	<link rel="stylesheet" href="../static/css/members/list.css" th:href="@{/css/members/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+    	<table class="table table-striped">
+			<thead> 
+				<tr> 
+					<th>#</th> 
+					<th>Name</th> 
+					<th>Email</th> 
+					<th>Posts By Member</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr th:each="member, iterationStatus : ${members}">
+					<td th:text="${iterationStatus.count}">1</td>
+					<td th:text="${member.name}">Name</td>
+					<td th:text="${member.email}">Email Address</td>
+					<td><a th:href="|/posts/byMember/${member.memberId}|">Posts By Member</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+		
+</body>
+</html>

@@ -1,0 +1,18 @@
+#insideDiv {
+	background-color:white; 
+	padding-left:4rem;
+	font-size: 1rem;
+	font-weight:bold;
+}
+
+p {
+	font-weight:normal;
+}
+
+#aHrefButton {
+	padding-left:.2rem;
+}
+
+.button-txt-color{
+	color:#fff;
+}

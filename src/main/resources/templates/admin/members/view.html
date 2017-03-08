@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+<link rel="stylesheet" href="../static/css/admin/members/view.css" th:href="@{/css/admin/members/view.css}"/>
+	<title>View Members</title>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+		<h2>View Members</h2>
+
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Email: </label>
+				<div class="col-md-10">
+					<p class="form-control-static" th:text="${member.email}">email</p>
+				</div>
+			</div>
+			<div class="form-group">
+		    	<label class="col-sm-2 control-label">Name: </label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${member.name}">Name</p>
+		    	</div>
+		  	</div>
+		</form>
+		
+		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/members/}">Back To Members List</a></button>
+		<br/><br/><br/>
+		
+	</div>
+		
+</body>
+</html>

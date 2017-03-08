@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>List Posts</title>
+	<link rel="stylesheet" href="../static/css/admin/teams/list.css" th:href="@{/css/admin/teams/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+		<h2>Teams</h2>
+		
+		<div th:if="${message}" class="alert alert-success" role="alert">
+			<p th:text="${message}">success message</p>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Team</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="team : ${teams}">
+					<td th:text="${team.teamName}">Team</td>
+					<td><a href="#" th:href="@{/admin/team/delete/} + ${team.teamId}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		
+		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/team/create}">Add New team</a></button>
+		<br/><br/>
+		
+		<p th:if="${teams.size() == 0}">
+			<div class="alert alert-warning" role="alert">No Teams Found.</div>
+		</p>
+		
+	</div>
+		
+</body>
+</html>

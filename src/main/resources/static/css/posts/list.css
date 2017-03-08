@@ -1,0 +1,13 @@
+#insideDiv {
+	background-color:white; 
+	padding-left:2rem;
+	padding-top:1.5rem;
+	font-size: 1rem;
+}
+
+#title{
+	font-size: 2rem;
+	font-weight: bold;
+	padding-left: 0rem;
+	
+}

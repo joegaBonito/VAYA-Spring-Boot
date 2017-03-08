@@ -1,0 +1,9 @@
+#insideDiv {
+	background-color:white; padding-left:2rem;
+	min-height:100%
+}
+
+p {
+	color:#141823;
+	font-size:1rem;
+}

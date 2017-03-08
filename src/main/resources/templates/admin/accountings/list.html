@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>Accounting List</title>
+	<link rel="stylesheet" href="../static/css/admin/accountings/list.css" th:href="@{/css/admin/accountings/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+	<h2>Accounting</h2>
+	
+	<div class="table-responsive">
+    	<table class="table table-striped table-bordered">
+			<thead> 
+				<tr> 
+					<th>Teams</th>
+					<th>Current Budget</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr th:each="team: ${teams}">
+					<td th:text="${team.teamName}">Teams</td>
+					<td th:text="${team.accounting.currentBudget}">Total Current Budget</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead> 
+					<th>Retreat</th>
+					<th>Current Budget</th>
+			</thead>
+			<tbody>
+				<tr th:each="retreat: ${retreats}">
+					<td th:text="${retreat.retreatName}">Retreats</td>
+					<td th:text="${retreat.accounting.currentBudget}">Total Current Budget</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead> 
+				<tr> 
+					<th>Meeting</th>
+					<th>Current Budget</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr th:each="meeting: ${meetings}">
+					<td th:text="${meeting.meetingName}">Meetings</td>
+					<td th:text="${meeting.accounting.currentBudget}">Total Current Budget</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead> 
+				<tr> 
+					<th>Etc</th>
+					<th>Current Budget</th>
+				</tr> 
+			</thead>
+			<tbody>
+				<tr th:each="etc: ${etcs}">
+					<td th:text="${etc.etcName}">Meetings</td>
+					<td th:text="${etc.accounting.currentBudget}">Total Current Budget</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div id="totalBudget">
+			Total Current Budget: <div th:text="${accountingTotalCurrentBudget}"></div>
+		</div>
+		<br/><br/>
+
+		<a href="/"><button class="btn btn-primary pull-right" type="button" th:href="@{/}">Home</button></a>
+	</div>
+</body>
+</html>
