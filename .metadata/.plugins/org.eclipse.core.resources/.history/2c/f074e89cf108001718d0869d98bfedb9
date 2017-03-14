@@ -1,0 +1,11 @@
+$("document").ready(function(){
+	$('select').change(function() {
+	   	$(this)
+	        .find('select.postformlist')
+	        .attr('disabled', true).end()
+	    if(this.value == "default")
+	        $(this)
+	        .find('select.postformlist')
+	        .attr('disabled', false)
+	});
+}); 

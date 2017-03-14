@@ -1,0 +1,114 @@
+body {
+	display:none;
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 1.8rem;
+    font-weight: 1rem;
+    line-height: 1.5;
+    color:#141823;
+    background-color: #eee;
+}
+
+.navbar {
+	color:#141823
+    position: relative;
+    padding: 0rem 0rem 0.2rem 1.5rem;
+}
+
+.navbar-nav {
+	padding:0rem;
+	margin-top: 3 px;
+	margin-bottom: 3px;
+}
+
+.navbar-nav > li  {
+	margin-top: .6rem;
+	margin-bottom: .6rem;
+}
+
+.navbar-nav > li >a {
+    padding-right: 15px;
+    font-size: 1rem;
+    color:#141823;
+}
+
+header h1 {
+	font-family: 'Exo', sans-serif;
+	font-size: 38px;
+}
+
+p, address, section {
+	font-family: 'Roboto', sans-serif;
+}
+
+address {
+	margin-top:20px;
+}
+
+.navbar-brand {
+	display: inline-block;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+.navbar-text {
+    display: inline-block;
+	margin:15px;
+    font-size: 1rem;
+}
+
+#frmlogout {
+	display:inline;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 0 40px 0;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.required {
+	color:#a94442;
+	font-weight:bold;
+}
+
+a {
+	color: #141823;
+	padding-left:10px;
+}
+
+a:focus, a:hover {
+    text-decoration: underline;
+}
