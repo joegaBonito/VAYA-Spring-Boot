@@ -45,8 +45,8 @@
 		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('team')}? 'has-error'">
 		    	<label class="col-sm-2 control-label">Team <span class="required">*</span></label>
 		    	<div class="col-md-10">
-					<select class="form-control" th:field="*{team}">
-						<option value="">Select Team</option>
+					<select class="postformlist form-control" th:field="*{team}">
+						<option value="default">Select Team</option>
 						<option th:each="team : ${teams}" th:value="${team.teamId}" th:text="${team.teamName}">Team</option>
 					</select>
 					<span th:if="${#fields.hasErrors('team')}" th:errors="*{team}" th:class="help-block">Team Errors</span>
@@ -55,8 +55,8 @@
 		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('meeting')}? 'has-error'">
 		    	<label class="col-sm-2 control-label">Meeting <span class="required">*</span></label>
 		    	<div class="col-md-10">
-					<select class="form-control" th:field="*{meeting}">
-						<option value="">Select Meeting</option>
+					<select class="postformlist form-control" th:field="*{meeting}">
+						<option value="default">Select Meeting</option>
 						<option th:each="meeting : ${meetings}" th:value="${meeting.meetingId}" th:text="${meeting.meetingName}">Meeting</option>
 					</select>
 					<span th:if="${#fields.hasErrors('meeting')}" th:errors="*{meeting}" th:class="help-block">Meeting Errors</span>
@@ -65,8 +65,8 @@
 		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('etc')}? 'has-error'">
 		    	<label class="col-sm-2 control-label">Etc <span class="required">*</span></label>
 		    	<div class="col-md-10">
-					<select class="form-control" th:field="*{etc}">
-						<option value="">Select Etc</option>
+					<select class=" postformlist form-control" th:field="*{etc}">
+						<option value="default">Select Etc</option>
 						<option th:each="etc : ${etcs}" th:value="${etc.etcId}" th:text="${etc.etcName}">Etc</option>
 					</select>
 					<span th:if="${#fields.hasErrors('etc')}" th:errors="*{etc}" th:class="help-block">Etc Errors</span>
@@ -75,8 +75,8 @@
 		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('retreat')}? 'has-error'">
 		    	<label class="col-sm-2 control-label">Retreat <span class="required">*</span></label>
 		    	<div class="col-md-10">
-					<select class="form-control" th:field="*{retreat}">
-						<option value="">Select Retreat</option>
+					<select class="postformlist form-control" th:field="*{retreat}">
+						<option value="default">Select Retreat</option>
 						<option th:each="retreat : ${retreats}" th:value="${retreat.retreatId}" th:text="${retreat.retreatName}">Retreat</option>
 					</select>
 					<span th:if="${#fields.hasErrors('retreat')}" th:errors="*{retreat}" th:class="help-block">Retreat Errors</span>
