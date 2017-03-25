@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,16 +30,23 @@ public class Meeting {
 	
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="meeting")
 	private Set<Post> post;
+	
+	@OneToOne(cascade={CascadeType.ALL},mappedBy="meeting")
+	private Master masterId;
 
-	public Meeting(Long meetingId, String meetingName, Accounting accounting, Set<Post> post) {
+	public Meeting() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Meeting(Long meetingId, String meetingName, Accounting accounting, Set<Post> post, Master masterId) {
 		super();
 		this.meetingId = meetingId;
 		this.meetingName = meetingName;
 		this.accounting = accounting;
 		this.post = post;
+		this.masterId = masterId;
 	}
-	
-	public Meeting() {}
 
 	public Long getMeetingId() {
 		return meetingId;
@@ -71,4 +79,12 @@ public class Meeting {
 	public void setPost(Set<Post> post) {
 		this.post = post;
 	}
+
+	public Master getMasterId() {
+		return masterId;
+	}
+
+	public void setMasterId(Master masterId) {
+		this.masterId = masterId;
+	}	
 }

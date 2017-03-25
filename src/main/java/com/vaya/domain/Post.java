@@ -49,7 +49,7 @@ public class Post {
 	private Etc etc;
 	
 	@ManyToOne
-	@JoinColumn(name="meeting_id")
+	@JoinColumn(nullable=true,name="meeting_id")
 	private Meeting meeting;
 	
 	@NotEmpty
