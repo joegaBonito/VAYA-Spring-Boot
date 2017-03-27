@@ -7,7 +7,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:/views.xml")
+@ImportResource("classpath:/webapp/WEB-INF/views.xml")
 public class VayaApplication extends SpringBootServletInitializer {
 
     @Override
