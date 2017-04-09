@@ -52,12 +52,15 @@ public class Post {
 	@JoinColumn(nullable=true,name="meeting_id")
 	private Meeting meeting;
 	
+	@Column(name="file_data")
+	private  byte[] fileData;
+	
 	@NotEmpty
 	@Column(columnDefinition = "TEXT")
 	private String body;
 
 	public Post(Long postId, String title, Date postedOn, double quantity, Member member, Team team, Retreat retreat,
-			Etc etc, Meeting meeting, String body) {
+			Etc etc, Meeting meeting, String body, byte[] fileData) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -69,6 +72,7 @@ public class Post {
 		this.etc = etc;
 		this.meeting = meeting;
 		this.body = body;
+		this.fileData = fileData;
 	}
 
 	public Post() {
@@ -153,5 +157,13 @@ public class Post {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public byte[] getFileData() {
+		return fileData;
+	}
+
+	public void setFileData(byte[] fileData) {
+		this.fileData = fileData;
 	}
 }

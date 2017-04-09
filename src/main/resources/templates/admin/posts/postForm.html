@@ -1,106 +1,148 @@
 <!DOCTYPE html>
-<html lang="en"
-	xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 	layout:decorator="layouts/main">
 <head>
-	<title>Create New Post</title>
-	<link rel="stylesheet" href="../static/css/admin/posts/postForm.css" th:href="@{/css/admin/posts/postForm.css}"/>
+<title>Create New Post</title>
+<link rel="stylesheet" href="../static/css/admin/posts/postForm.css"
+	th:href="@{/css/admin/posts/postForm.css}" />
 </head>
 <body>
-		
-	<div id="insideDiv" layout:fragment="content">
-	
-		<h2>Create New Post</h2>
-		<br/>
 
-		<form class="form-horizontal" th:object="${post}" th:action="@{/admin/post/save}" method="post">
-			<input type="hidden" th:field="*{postId}"/>
+	<div id="insideDiv" layout:fragment="content">
+
+		<h2>Create New Post</h2>
+		<br />
+
+		<form class="form-horizontal" th:object="${post}"
+			th:action="@{/admin/post/save}" method="post" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{postId}" />
 			<!-- When logged in user's email needs to be input
 			   <input type="hidden" id="member" name="member" th:value="${member.memberId}"/> 
 			-->
-			<div th:class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
-				<label class="col-sm-2 control-label">Title <span class="required">*</span></label>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('title')}? 'has-error'">
+				<label class="col-sm-2 control-label">Title <span
+					class="required">*</span></label>
 				<div class="col-md-10">
-					<input type="text" class="form-control" th:field="*{title}"/>
-					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:class="help-block">Title Errors</span>
+					<input type="text" class="form-control" th:field="*{title}" /> <span
+						th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+						th:class="help-block">Title Errors</span>
 				</div>
 			</div>
-			<div th:class="form-group" th:classappend="${#fields.hasErrors('postedOn')}? 'has-error'">
-				<label class="col-sm-2 control-label">Posted On <span class="required">*</span></label>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('postedOn')}? 'has-error'">
+				<label class="col-sm-2 control-label">Posted On <span
+					class="required">*</span></label>
 				<div class="col-md-10">
-					<input type="text" class="form-control" th:value="${#dates.format(#dates.createNow(), 'MM/dd/yyyy HH:mm')}" th:field="*{postedOn}" />
-						<span th:if="${#fields.hasErrors('postedOn')}" th:errors="*{postedOn}" th:class="help-block">Posted On Errors</span>
+					<input type="text" class="form-control"
+						th:value="${#dates.format(#dates.createNow(), 'MM/dd/yyyy HH:mm')}"
+						th:field="*{postedOn}" /> <span
+						th:if="${#fields.hasErrors('postedOn')}" th:errors="*{postedOn}"
+						th:class="help-block">Posted On Errors</span>
 				</div>
-			</div>	  
-			<div th:class="form-group" th:classappend="${#fields.hasErrors('member')}? 'has-error'">
-		    	<label class="col-sm-2 control-label">Member <span class="required">*</span></label>
-		    	<div class="col-md-10">
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('member')}? 'has-error'">
+				<label class="col-sm-2 control-label">Member <span
+					class="required">*</span></label>
+				<div class="col-md-10">
 					<select class="form-control" th:field="*{member}">
-						<option value="">Select Member</option>
-						<option th:each="member : ${members}" th:value="${member.memberId}" th:text="${member.name}">Member</option>
-					</select>
-					<span th:if="${#fields.hasErrors('member')}" th:errors="*{member}" th:class="help-block">Member Errors</span>
-		    	</div>
-		  	</div>			
-		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('team')}? 'has-error'">
-		    	<label class="col-sm-2 control-label">Team <span class="required">*</span></label>
-		    	<div class="col-md-10">
-					<select class="postformlist form-control" th:field="*{team}">
-						<option value="default">Select Team</option>
-						<option th:each="team : ${teams}" th:value="${team.teamId}" th:text="${team.teamName}">Team</option>
-					</select>
-					<span th:if="${#fields.hasErrors('team')}" th:errors="*{team}" th:class="help-block">Team Errors</span>
-		    	</div>
-		  	</div>		
-		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('meeting')}? 'has-error'">
-		    	<label class="col-sm-2 control-label">Meeting <span class="required">*</span></label>
-		    	<div class="col-md-10">
-					<select class="postformlist form-control" th:field="*{meeting}">
-						<option value="default">Select Meeting</option>
-						<option th:each="meeting : ${meetings}" th:value="${meeting.meetingId}" th:text="${meeting.meetingName}">Meeting</option>
-					</select>
-					<span th:if="${#fields.hasErrors('meeting')}" th:errors="*{meeting}" th:class="help-block">Meeting Errors</span>
-		    	</div>
-		  	</div>	
-		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('etc')}? 'has-error'">
-		    	<label class="col-sm-2 control-label">Etc <span class="required">*</span></label>
-		    	<div class="col-md-10">
-					<select class=" postformlist form-control" th:field="*{etc}">
-						<option value="default">Select Etc</option>
-						<option th:each="etc : ${etcs}" th:value="${etc.etcId}" th:text="${etc.etcName}">Etc</option>
-					</select>
-					<span th:if="${#fields.hasErrors('etc')}" th:errors="*{etc}" th:class="help-block">Etc Errors</span>
-		    	</div>
-		  	</div>	
-		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('retreat')}? 'has-error'">
-		    	<label class="col-sm-2 control-label">Retreat <span class="required">*</span></label>
-		    	<div class="col-md-10">
-					<select class="postformlist form-control" th:field="*{retreat}">
-						<option value="default">Select Retreat</option>
-						<option th:each="retreat : ${retreats}" th:value="${retreat.retreatId}" th:text="${retreat.retreatName}">Retreat</option>
-					</select>
-					<span th:if="${#fields.hasErrors('retreat')}" th:errors="*{retreat}" th:class="help-block">Retreat Errors</span>
-		    	</div>
-		  	</div>	
-		  	<div th:class="form-group" th:classappend="${#fields.hasErrors('quantity')}? 'has-error'">
-				<label class="col-sm-2 control-label">Quantity <span class="required">*</span></label>
-				<div class="col-md-10">
-					<input type="text" class="form-control" th:field="*{quantity}"/>
-					<span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" th:class="help-block">Quantity Errors</span>
+						<option value="" class="">Select Member</option>
+						<option th:each="member : ${members}"
+							th:value="${member.memberId}" th:text="${member.name}">Member</option>
+					</select> <span th:if="${#fields.hasErrors('member')}" th:errors="*{member}"
+						th:class="help-block">Member Errors</span>
 				</div>
 			</div>
-			<div th:class="form-group" th:classappend="${#fields.hasErrors('body')}? 'has-error'">
-				<label class="col-sm-2 control-label">Body <span class="required">*</span></label>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('team')}? 'has-error'">
+				<label class="col-sm-2 control-label">Team <span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<select class="postformlist form-control" th:field="*{team}">
+						<option value="" class="default">Select Team</option>
+						<option th:each="team : ${teams}" th:value="${team.teamId}"
+							th:text="${team.teamName}">Team</option>
+					</select> <span th:if="${#fields.hasErrors('team')}" th:errors="*{team}"
+						th:class="help-block">Team Errors</span>
+				</div>
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('meeting')}? 'has-error'">
+				<label class="col-sm-2 control-label">Meeting <span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<select class="postformlist form-control" th:field="*{meeting}">
+						<option value="" class="default">Select Meeting</option>
+						<option th:each="meeting : ${meetings}"
+							th:value="${meeting.meetingId}" th:text="${meeting.meetingName}">Meeting</option>
+					</select> <span th:if="${#fields.hasErrors('meeting')}"
+						th:errors="*{meeting}" th:class="help-block">Meeting Errors</span>
+				</div>
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('etc')}? 'has-error'">
+				<label class="col-sm-2 control-label">Etc <span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<select class=" postformlist form-control" th:field="*{etc}">
+						<option value="" class="default">Select Etc</option>
+						<option th:each="etc : ${etcs}" th:value="${etc.etcId}"
+							th:text="${etc.etcName}">Etc</option>
+					</select> <span th:if="${#fields.hasErrors('etc')}" th:errors="*{etc}"
+						th:class="help-block">Etc Errors</span>
+				</div>
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('retreat')}? 'has-error'">
+				<label class="col-sm-2 control-label">Retreat <span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<select class="postformlist form-control" th:field="*{retreat}">
+						<option value="" class="default">Select Retreat</option>
+						<option th:each="retreat : ${retreats}"
+							th:value="${retreat.retreatId}" th:text="${retreat.retreatName}">Retreat</option>
+					</select> <span th:if="${#fields.hasErrors('retreat')}"
+						th:errors="*{retreat}" th:class="help-block">Retreat Errors</span>
+				</div>
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('quantity')}? 'has-error'">
+				<label class="col-sm-2 control-label">Quantity <span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<input type="text" class="form-control" th:field="*{quantity}" />
+					<span th:if="${#fields.hasErrors('quantity')}"
+						th:errors="*{quantity}" th:class="help-block">Quantity
+						Errors</span>
+				</div>
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('body')}? 'has-error'">
+				<label class="col-sm-2 control-label">Body <span
+					class="required">*</span></label>
 				<div class="col-md-10">
 					<textarea class="form-control" rows="7" th:field="*{body}">body</textarea>
-					<span th:if="${#fields.hasErrors('body')}" th:errors="*{body}" th:class="help-block">Body Errors</span>
+					<span th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+						th:class="help-block">Body Errors</span>
 				</div>
-			</div>		  	
+			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('fileData')}? 'has-error'">
+				<label class="col-sm-2 control-label">Upload File<span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<input type="file" th:field="*{fileData}" name="fileData" size="50" /><br /> <span
+						th:if="${#fields.hasErrors('fileData')}"
+						th:errors="*{fileData}" th:class="help-block">Files
+						Upload Errors</span>
+				</div>
+			</div>
 			<button type="submit" class="btn btn-primary pull-right">Submit</button>
 		</form>
-		
-		<br/><br/><br/>
-		
+
+		<br /> <br /> <br />
+
 	</div>
 </body>
 </html>

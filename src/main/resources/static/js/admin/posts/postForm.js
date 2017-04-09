@@ -9,7 +9,7 @@ $("document").ready(function(){
 	        .parent('div').parent('div').siblings('div').find('.postformlist')
 	        .attr('disabled', true).end()
 		}
-	    if(this.value == "default")
+	    if(this.class == "default")
 	        $(this)
 	        .parent('div').parent('div').siblings('div').find('.postformlist')
 	        .attr('disabled', false)

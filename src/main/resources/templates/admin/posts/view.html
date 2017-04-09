@@ -69,6 +69,12 @@
 					<p class="form-control-static" th:text="${post.body}">body</p>
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Attachment:</label>
+				<div class="col-md-10">
+					<p class="form-control-static" th:text="${post.fileData}">fileData</p>
+				</div>
+			</div>
 		</form>
 		
 		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/posts/}">Back To Posts List</a></button>
