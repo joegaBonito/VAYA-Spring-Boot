@@ -72,7 +72,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Attachment:</label>
 				<div class="col-md-10">
-					<p class="form-control-static" th:text="${post.fileData}">fileData</p>
+					<img th:src="@{/image/}+${post.postId}" height="500px" width="500px"/>
 				</div>
 			</div>
 		</form>

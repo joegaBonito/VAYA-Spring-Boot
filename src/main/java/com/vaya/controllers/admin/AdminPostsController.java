@@ -1,18 +1,27 @@
 package com.vaya.controllers.admin;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +31,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vaya.domain.Member;
 import com.vaya.domain.Post;
-import com.vaya.excel.FileUpload;
 import com.vaya.excel.FileUploadValidator;
 import com.vaya.services.EtcService;
 import com.vaya.services.MeetingService;
@@ -74,6 +82,18 @@ public class AdminPostsController {
 		return "admin/posts/view";
 	}
 
+	/*
+	 * Displays image to web from the database blob.
+	 */
+	@RequestMapping(value = "/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws IOException {
+
+		byte[] imageContent = postService.get(id).getFileData();
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
+	}
+
 	// create | save
 
 	@RequestMapping("/admin/post/create/")
@@ -95,8 +115,7 @@ public class AdminPostsController {
 
 	@RequestMapping(value = "/admin/post/save", method = RequestMethod.POST)
 	public String save(@Valid Post post, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors())
-		{
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("members", memberService.list());
 			return "admin/posts/postForm";
 		} else {
@@ -128,11 +147,9 @@ public class AdminPostsController {
 		redirectAttrs.addFlashAttribute("message", "Post was deleted!");
 		return "redirect:/admin/posts";
 	}
-	
+
 	@InitBinder
-	protected void initBinder(HttpServletRequest request,
-		ServletRequestDataBinder binder) throws ServletException {
-			binder.registerCustomEditor(byte[].class,
-				new ByteArrayMultipartFileEditor());
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws ServletException {
+		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
 }
