@@ -10,7 +10,7 @@
 		
 	<div id="insideDiv" layout:fragment="content">
 	
-		<ol id="breadcrumb-vaya" class="breadcrumb">
+		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="/">Home</a></li>
 			<li class="breadcrumb-item"><a href="/posts/list">Posts</a></li>
 			<li class="breadcrumb-item active" th:text="${post.title}"></li>
@@ -18,15 +18,16 @@
 	
 	    <article>
 			<header>
-				<h2 th:text="${post.title}">title</h2>
+				<h2 style="text-decoration:underline;" th:text="${post.title}">title</h2> 
 				<p th:text="${#calendars.format(post.postedOn,'M/dd/yyyy hh:mm a')}">postedOn</p>
 			</header>
-			<section th:utext="${post.body}">
+			Description:
+			<section style="padding-left:2em" th:utext="${post.body}">
 				body
 			</section>
 			<footer>
 				<address>
-					Posted By <a th:href="|mailto:${post.member.email}|"> <span th:text="|${post.member.name}|">member</span></a>
+					Posted By:<a th:href="|mailto:${post.member.email}|"><span th:text="|${post.member.name}|">member</span></a>
 				</address>
 			</footer>
 			<hr/>

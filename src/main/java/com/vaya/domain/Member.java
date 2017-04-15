@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Member {
@@ -20,12 +21,15 @@ public class Member {
 	@Column(name="name")
 	private String name;
 	
+	@NotNull(message="Email is Required")
 	@Column(name="email")
 	private String email;
 	
+	@NotNull(message="Password is Required")
 	@Column(name="password")
 	private String password;
 	
+	@NotNull(message="Confirming Password is Required")
 	@Column(name="confirm_password")
 	private String confirmPassword;
 

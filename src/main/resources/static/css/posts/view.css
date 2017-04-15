@@ -1,13 +1,17 @@
 #insideDiv {
 	background-color:white; 
 	padding-left:4rem;
+	padding-top:1.5rem;
 	font-size: 1rem;
 }
 
-#breadcrumb-vaya {
-	background-color:white;
-	margin-left:-3.4rem;
-	margin-top: -.5rem;
+.breadcrumb{
+	margin-top:-1.5rem;
+	margin-left:-4rem;
+	padding: .75rem 1rem;
+    list-style: none;
+    background-color: white;
+    border-radius: .25rem;
 }
 
 label {

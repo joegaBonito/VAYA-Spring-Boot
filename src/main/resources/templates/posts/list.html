@@ -10,12 +10,12 @@
 		
 	<div id="insideDiv" layout:fragment="content">
 	
-	    <article th:each="post : ${posts}">
+	    <div style="margin-bottom:0.2rem;padding:.8rem;border:2px solid #eceeef" th:each="post : ${posts}">
 			<header>
 				<a id="title" th:href="|@{/posts/view/}${post.postId}|" th:text="${post.title}"></a>
-				<p th:text="${#calendars.format(post.postedOn,'MM/dd/yyyy hh:mm:ss a')}">postedOn</p>
+				<p class="each-article" th:text="${#calendars.format(post.postedOn,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member.name}">postedOn member.name</p>
 			</header>
-		</article>
+		</div>
 
 		<p th:if="${posts.size() == 0}">
 			<div class="alert alert-warning" role="alert">No Posts Found.</div>
