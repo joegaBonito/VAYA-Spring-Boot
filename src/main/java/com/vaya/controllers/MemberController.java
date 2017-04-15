@@ -53,6 +53,9 @@ public class MemberController {
 		if(bindingResult.hasErrors()) {
 			return "/auth/createaccount";
 		}
+		if(!member.getPassword().equals(member.getConfirmPassword())) {
+			return "/auth/createaccount";
+		}
 		memberService.save(member);
 		return "auth/login";
 	}

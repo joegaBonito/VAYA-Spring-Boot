@@ -18,6 +18,7 @@ public class Member {
 	@Column(name="id")
 	private Long memberId;
 	
+	@NotNull(message="Name is Required")
 	@Column(name="name")
 	private String name;
 	
