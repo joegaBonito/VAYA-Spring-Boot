@@ -1,5 +1,6 @@
 package com.vaya.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class MemberService {
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		//Controlling the role of the user
-		member.setRole(Role.USER);
+		member.setRole("USER");
 		return memberRepository.save(member);
 	}
 
@@ -55,5 +56,22 @@ public class MemberService {
 				tempId = member.getMemberId();
 		}
 		return get(tempId);
+	}
+	
+	public List<String> roles() {
+		List<String> roles = new ArrayList<String>();
+		roles.add("ADMIN");
+		roles.add("MEMBER");
+		roles.add("USER");
+		roles.add("GUEST");
+		return roles;
+	}
+	
+	public void editSave(Member member) {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
+		member.setRole(member.getRole());
+		memberRepository.save(member);
 	}
 }

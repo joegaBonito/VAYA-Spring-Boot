@@ -34,15 +34,16 @@ public class Member {
 	@Column(name="confirm_password")
 	private String confirmPassword;
 
-	@Enumerated(EnumType.STRING)
-	private Role role; 
+	@NotNull(message="Role is Required")
+	@Column(name="role")
+	private String role; 
 	
 	@OneToMany(mappedBy="member")
 	private Set<Post> post;
 
 	public Member() {}
 
-	public Member(Long memberId, String name, String email, String password, String confirmPassword, Role role,
+	public Member(Long memberId, String name, String email, String password, String confirmPassword, String role,
 			Set<Post> post) {
 		super();
 		this.memberId = memberId;
@@ -94,11 +95,11 @@ public class Member {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

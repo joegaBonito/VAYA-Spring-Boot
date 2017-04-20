@@ -25,6 +25,7 @@ public class AdminMembersController{
 
 	private MemberService memberService;
 	
+	
 	@Autowired
 	public AdminMembersController(MemberService memberService) {
 		this.memberService = memberService;
@@ -47,23 +48,23 @@ public class AdminMembersController{
 	public String create(Model model) {
 		model.addAttribute("member", new Member());
 		model.addAttribute("members", memberService.list());
+		model.addAttribute("roles", memberService.roles());
 		return "admin/members/memberForm";
 	}
 	@RequestMapping(value = "/admin/members/save", method = RequestMethod.POST )
-	public String save(@Valid Member member, BindingResult bindingResult, Model model) {				
-		if( bindingResult.hasErrors() ){
-			model.addAttribute("members", memberService.list());
-			return "admin/members/createMember";
-		} else {
-			Member savedMember = memberService.save(member);
-			return "redirect:/admin/members/" + savedMember.getMemberId();			
-		}
-	 
+	public String editSave(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {				
+		if(bindingResult.hasErrors()){
+			model.addAttribute("roles", memberService.roles());
+			return "/admin/members/memberForm";
+		} 
+		memberService.editSave(member);
+	    return "redirect:/admin/members/";	
 	}
 	
 	@RequestMapping("/admin/members/edit/{id}")
 	public String edit(@PathVariable Long id, Model model){
 		model.addAttribute("member",memberService.get(id));
+		model.addAttribute("roles", memberService.roles());
 		return "admin/members/memberForm";		
 	}
 	
@@ -73,5 +74,11 @@ public class AdminMembersController{
 		memberService.delete(id);
 		redirectAttrs.addFlashAttribute("message", "Member was deleted!");
 		return "redirect:/admin/members";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
 	}
 }

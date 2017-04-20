@@ -21,24 +21,26 @@ public class MemberUserService implements UserDetailsService {
 
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	public MemberUserService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
-	
-	public MemberUserService() {}
-	
+
+	public MemberUserService() {
+	}
+
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = memberRepository.findByEmail(username);
-		if(member != null) {
+		if (member != null) {
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			if (member.getRole()==Role.ADMIN) {
+			if (member.getRole().equals("ADMIN")) {
 				authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-			}
-			else 
+			} else if (member.getRole().equals("MEMBER")) {
+				authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
+			} else
 				authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-			return new User(member.getEmail(),member.getPassword(),authorities); 
-		} 
+			return new User(member.getEmail(), member.getPassword(), authorities);
+		}
 		throw new UsernameNotFoundException("User '" + username + "' not found.");
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vaya.services.PostService;
 
@@ -20,7 +21,7 @@ public class PostController {
 		this.postService = postService;
 	}
 	
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
 	@RequestMapping("/list")
 	public String postList(Model model) {
 		model.addAttribute("posts",postService.list());
@@ -37,5 +38,20 @@ public class PostController {
 	public String view(@PathVariable(value="id") Long id, Model model) {
 		model.addAttribute("post",postService.get(id));
 		return "posts/view";
+	}
+	
+	@Secured({"ROLE_MEMBER"})
+	@RequestMapping("/edit/{id}")
+	public String edit(@PathVariable(value="id") Long id, Model model) {
+		model.addAttribute("post",postService.get(id));
+		return "posts/postForm";
+	}
+	
+	@Secured({"ROLE_MEMBER"})
+	@RequestMapping("/posts/delete/{id}")
+	public String delete(@PathVariable Long id, RedirectAttributes redirectAttrs) {
+		postService.delete(id);
+		redirectAttrs.addFlashAttribute("message", "Post was deleted!");
+		return "redirect:/posts/list";
 	}
 }
