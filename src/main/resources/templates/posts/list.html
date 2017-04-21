@@ -21,6 +21,8 @@
 			<div class="alert alert-warning" role="alert">No Posts Found.</div>
 		</p>
 		
+		<button type="button" class="btn btn-primary pull-right" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})"><a id="aHrefButton" class="button-txt-color"  th:href="@{/posts/create}">Add New Post</a></button>
+		<br/><br/>
 	</div>
 		
 </body>
