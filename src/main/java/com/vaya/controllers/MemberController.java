@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.vaya.domain.Member;
+import com.vaya.domain.Role;
 import com.vaya.services.MemberService;
 
 @Controller
@@ -29,14 +30,14 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list")
 	public String list(Model model){
 		model.addAttribute("members", memberService.list());
 		return "members/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/view")
 	public String view(Model model){
 		return "members/view";
@@ -44,7 +45,9 @@ public class MemberController {
 	
 	@RequestMapping("/createMember")
 	public String createAuthor(Model model) {
-		model.addAttribute("member", new Member());
+		Member member = new Member();
+		member.setRole("GUEST");
+		model.addAttribute("member", member);
 		return "auth/createaccount";
 	}
 	

@@ -51,35 +51,40 @@ public class PostController {
 		this.retreatService = retreatService;
 	}
 
-	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list")
-	public String postList(Model model) {
+	public String postList(Principal principal, Model model) {
+		/*
+		 * Used when logged in user's email is directly used as the owner of a
+		 * post.
+		 */
+		model.addAttribute("owner",principal.getName());
 		model.addAttribute("posts",postService.list());
 		return "/posts/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
 	public String byAuthor(@PathVariable(value="id") Long id, Model model){
 		model.addAttribute("posts", postService.listByMember(id));
 		return "posts/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/view/{id}")
 	public String view(@PathVariable(value="id") Long id, Model model) {
 		model.addAttribute("post",postService.get(id));
 		return "posts/view";
 	}
 	
-	@Secured({"ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/edit/{id}")
 	public String edit(@PathVariable(value="id") Long id, Model model) {
 		model.addAttribute("post",postService.get(id));
 		return "posts/postForm";
 	}
 	
-	@Secured({"ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable Long id, RedirectAttributes redirectAttrs) {
 		postService.delete(id);
@@ -87,16 +92,10 @@ public class PostController {
 		return "redirect:/posts/list";
 	}
 	
-	@Secured({"ROLE_MEMBER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/create")
 	public String create(Principal principal, Model model) {
-		model.addAttribute("post", new Post());
-		/*
-		 * Used when logged in user's email is directly used as the owner of a
-		 * post.
-		 * model.addAttribute("member",memberService.getMember(principal.getName
-		 * ()));
-		 */
+		model.addAttribute("post", new Post());		 
 		model.addAttribute("members", memberService.list());
 		model.addAttribute("teams", teamService.teamList());
 		model.addAttribute("etcs", etcService.etcList());

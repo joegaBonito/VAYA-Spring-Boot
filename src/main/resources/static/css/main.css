@@ -22,6 +22,7 @@ body {
 .navbar-nav>li {
 	margin-top: .6rem;
 	margin-bottom: .6rem;
+	border-top-style:solid;
 }
 
 .navbar-nav>li>a {
@@ -108,14 +109,13 @@ address {
 	font-weight: bold;
 }
 
-a {
+/* a {
 	color: #141823;
-	padding-left: 10px;
 }
 
 a:focus, a:hover {
 	text-decoration: underline;
-}
+} */
 
 .footer {
 	right: 0;

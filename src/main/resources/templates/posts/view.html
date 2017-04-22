@@ -22,31 +22,31 @@
 				<p th:text="${#calendars.format(post.postedOn,'M/dd/yyyy hh:mm a')}">postedOn</p>
 			</header>
 			<section >
-		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 		    	<label class="col-sm-2 control-label">Team: </label>
 		    	<div class="col-md-10">
 		    		<p class="form-control-static" th:text="${post.team} ? ${post.team.teamName} : 'Not a Team Expense'">Team</p>
 		    	</div>
 		  	</div>		
-		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 		    	<label class="col-sm-2 control-label">Meeting: </label>
 		    	<div class="col-md-10">
 		    		<p class="form-control-static" th:text="${post.meeting} ? ${post.meeting.meetingName} : 'Not a Meeting Expense'">Meeting</p>
 		    	</div>
 		  	</div>	 
-		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 		    	<label class="col-sm-2 control-label">Etc: </label>
 		    	<div class="col-md-10">
 		    		<p class="form-control-static" th:text="${post.etc} ? ${post.etc.etcName} : 'Not a ETC Expense'">Etc</p>
 		    	</div>
 		  	</div>	
-		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+		  	<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 		    	<label class="col-sm-2 control-label">Retreat: </label>
 		    	<div class="col-md-10">
 		    		<p class="form-control-static" th:text="${post.retreat} ? ${post.retreat.retreatName} : 'Not a Retreat Expense'">Retreat</p>
 		    	</div>
 		  	</div>	
-			<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+			<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 		    	<label class="col-sm-2 control-label">Amount:</label>
 		    	<div class="col-md-10">
 		    		<p class="form-control-static" th:text="${post.quantity}">Amount</p>
@@ -58,7 +58,7 @@
 					<p class="form-control-static" th:text="${post.body}">body</p>
 				</div>
 			</div>
-			<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})">
+			<div class="form-group" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 				<label class="col-sm-2 control-label">Attachment:</label>
 				<div class="col-md-10">
 					<img th:src="@{/image/}+${post.postId}" height="500px"/>

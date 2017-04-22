@@ -38,10 +38,10 @@
 					<td th:text="${#calendars.format(post.postedOn,'M/dd/yyyy hh:mm:ss a')}">posted on</td>
 					<td th:text="${post.member.name}">Member</td>
 					<td th:text="${post.team} ? ${post.team.teamName} : ''">Team Name</td>
-					<th th:text="${post.meeting} ? ${post.meeting.meetingName} : ''">Meeting </th>
-					<th th:text="${post.etc} ? ${post.etc.etcName} : ''">Etc</th>
-					<th th:text="${post.retreat} ? ${post.retreat.retreatName} : ''">Retreat</th>
-					<td th:text="${post.quantity}">Quantity</td>
+					<th style="font-weight:normal" th:text="${post.meeting} ? ${post.meeting.meetingName} : ''">Meeting </th>
+					<th style="font-weight:normal" th:text="${post.etc} ? ${post.etc.etcName} : ''">Etc</th>
+					<th style="font-weight:normal" th:text="${post.retreat} ? ${post.retreat.retreatName} : ''">Retreat</th>
+					<td style="font-weight:normal" th:text="${post.quantity}">Quantity</td>
 					<td><a href="#" th:href="@{/admin/post/} + ${post.postId}">View</a></td>
 					<td><a href="#" th:href="@{/admin/post/edit/} + ${post.postId}">Edit</a></td>
 					<td><a href="#" th:href="@{/admin/post/delete/} + ${post.postId}">Delete</a></td>

@@ -61,7 +61,6 @@ public class MemberService {
 	public List<String> roles() {
 		List<String> roles = new ArrayList<String>();
 		roles.add("ADMIN");
-		roles.add("MEMBER");
 		roles.add("USER");
 		roles.add("GUEST");
 		return roles;
