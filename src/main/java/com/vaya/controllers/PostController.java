@@ -81,6 +81,11 @@ public class PostController {
 	@RequestMapping("/edit/{id}")
 	public String edit(@PathVariable(value="id") Long id, Model model) {
 		model.addAttribute("post",postService.get(id));
+		model.addAttribute("members", memberService.list());
+		model.addAttribute("teams", teamService.teamList());
+		model.addAttribute("etcs", etcService.etcList());
+		model.addAttribute("meetings", meetingService.meetingList());
+		model.addAttribute("retreats", retreatService.retreatList());
 		return "posts/postForm";
 	}
 	
