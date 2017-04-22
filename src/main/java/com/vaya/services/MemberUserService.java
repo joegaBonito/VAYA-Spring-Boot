@@ -35,10 +35,10 @@ public class MemberUserService implements UserDetailsService {
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			if (member.getRole().equals("ADMIN")) {
 				authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-			} else if (member.getRole().equals("MEMBER")) {
-				authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
-			} else
+			} else if (member.getRole().equals("USER")) {
 				authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			} else
+				authorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
 			return new User(member.getEmail(), member.getPassword(), authorities);
 		}
 		throw new UsernameNotFoundException("User '" + username + "' not found.");

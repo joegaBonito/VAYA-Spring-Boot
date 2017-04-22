@@ -30,14 +30,14 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list")
 	public String list(Model model){
 		model.addAttribute("members", memberService.list());
 		return "members/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/view")
 	public String view(Model model){
 		return "members/view";

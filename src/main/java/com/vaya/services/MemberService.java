@@ -33,7 +33,7 @@ public class MemberService {
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		//Controlling the role of the user
-		member.setRole("USER");
+		member.setRole("GUEST");
 		return memberRepository.save(member);
 	}
 

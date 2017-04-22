@@ -51,7 +51,7 @@ public class PostController {
 		this.retreatService = retreatService;
 	}
 
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list")
 	public String postList(Principal principal, Model model) {
 		/*
@@ -63,14 +63,14 @@ public class PostController {
 		return "/posts/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
 	public String byAuthor(@PathVariable(value="id") Long id, Model model){
 		model.addAttribute("posts", postService.listByMember(id));
 		return "posts/list";
 	}
 	
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/view/{id}")
 	public String view(@PathVariable(value="id") Long id, Model model) {
 		model.addAttribute("post",postService.get(id));
