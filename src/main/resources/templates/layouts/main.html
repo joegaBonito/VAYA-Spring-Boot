@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog Main Layout</title>
+<title>VAYA</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
@@ -16,91 +16,94 @@
 	rel='stylesheet' type='text/css' />
 <link href='https://fonts.googleapis.com/css?family=Exo'
 	rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" href="../static/css/main.css"
+<link rel="stylesheet" href="../static/css/main.css"
 	th:href="@{/css/main.css}" />
-
-<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 <body style="display: none">
 
 	<div class="container">
 		<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 			<button class="navbar-toggler navbar-toggler-right" type="button"
-				data-toggle="collapse" data-target="#navbarNav"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
+				data-toggle="collapse" data-target="#obs-nav-dropdown"
+				aria-controls="obs-nav-dropdown" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a class="navbar-brand" href="/">VAYA</a>
-			<div class="collapse navbar-collapse"
-				id="navbarNav">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"
-						th:class="${controllerName == 'Home'} ? 'dropdown active' : 'dropdown'"><a
-						href="/">Home</a></li>
-					<li class="nav-item"
-						th:class="${controllerName == 'Post'} ? 'dropdown active ' : 'dropdown '">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">Posts</a>
-						<ul class=" dropdown-menu">
-							<li><a href="/posts/list">List</a></li>
-						</ul>
-					</li>
-					<li class="dropdown"
-						th:class="${controllerName == 'Member'} ? 'dropdown active' : 'dropdown'">
-						<a href="#" class=" dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">Members</a>
-						<ul class=" dropdown-menu">
-							<li><a href="/members/list">List</a></li>
-						</ul>
-					</li>
-					<li class="dropdown"
-						th:class="${controllerName == 'AdminPost'} ? 'dropdown active' : 'dropdown'"
-						sec:authorize="hasRole('ROLE_ADMIN')"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown" role="button"
-						aria-haspopup="true" aria-expanded="false">Admin</a>
-						<ul class="dropdown-menu">
-							<li><a href="/admin/posts/">Posts</a></li>
-							<li><a href="/admin/members/">Members</a></li>
-							<li><a href="/admin/team/list">Teams</a></li>
-							<li><a href="/admin/accountings/">Accounting</a></li>
-						</ul></li>
+			<div class="collapse navbar-collapse" id="obs-nav-dropdown">
+				<ul class="navbar-nav">
+					<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item dropdown active"><a
+						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						href="#" role="button">Posts</a>
+						<div class="dropdown-menu"
+							aria-labelledby="obs-nav-dropdown-menulink">
+							<a class="dropdown-item" href="/posts/list">List</a>
+						</div></li>
+					<li class="nav-item dropdown active"><a
+						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						href="#" role="button">Members</a>
+						<div class="dropdown-menu"
+							aria-labelledby="obs-nav-dropdown-menulink">
+							<a class="dropdown-item" href="/members/list">List</a>
+						</div></li>
+					<li class="nav-item dropdown active"
+						sec:authorize="hasAnyRole({'ROLE_ADMIN'})"><a
+						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						href="#" role="button">Admin</a>
+						<div class="dropdown-menu"
+							aria-labelledby="obs-nav-dropdown-menulink">
+							<a class="dropdown-item" href="/admin/posts/">Posts</a> <a
+								class="dropdown-item" href="/admin/members/">Members</a> <a
+								class="dropdown-item" href="/admin/team/list">Teams</a> <a
+								class="dropdown-item" href="/admin/accountings/">Accounting</a>
+						</div></li>
 				</ul>
-				<div class="navbar-text navbar-right">
-					<span class="glyphicon glyphicon-user"></span> <span
-						sec:authentication="name">Guest</span> |
-					<form sec:authorize="isAuthenticated()" id="frmlogout"
-						th:action="@{/logout}" method="post" class="form-inline">
-						<a href="javascript:{}"
+			</div>
+			<div class="navbar-text navbar-right" style="white-space: nowrap;">
+				<form sec:authorize="isAuthenticated()" id="frmlogout"
+					th:action="@{/logout}" method="post" class="form-inline"
+					style="white-space: nowrap;">
+					<div style="white-space: nowrap;">
+						<span sec:authentication="name">Name</span>&nbsp; | &nbsp; <a
+							href="javascript:{}"
 							onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
-					</form>
-					<a sec:authorize="!isAuthenticated()" th:href="@{/login}"><span
-						class="glyphicon glyphicon-log-in"></span> Login</a>
+					</div>
+				</form>
+				<div sec:authorize="!isAuthenticated()" style="white-space: nowrap;">
+					Anonymous User: <a th:href="@{/login}"> Login</a>
 				</div>
 			</div>
-			</nav>
-
-	<div style="margin: 5px 0px 5px 0px;" layout:fragment="content"></div>
-	<div class="col-lg-12 footer">
+		</nav>
+		<div style="margin: 5px 0px 5px 0px;" layout:fragment="content"></div>
 		<div class="col-lg-12 footer">
-			<p>
-				Email: vayaarumdaunkm@gmail.com <br /> Address: 1 Arumdaun St
-				Bethpage, New York, NY 11714 <br /> Copyright: © 2017 Joe Jung -
-				All rights reserved<br />
-			</p>
+			<div class="col-lg-12 footer">
+				<p>
+					Email: vayaarumdaunkm@gmail.com <br /> Address: 1 Arumdaun St
+					Bethpage, New York, NY 11714 <br /> Copyright: © 2017 Joe Jung -
+					All rights reserved<br />
+				</p>
+			</div>
 		</div>
-	</div>
 
 
 	</div>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+		integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+		crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/js/index.js"></script>
 	<script type="text/javascript" src="/js/admin/posts/postForm.js"></script>
 </body>
