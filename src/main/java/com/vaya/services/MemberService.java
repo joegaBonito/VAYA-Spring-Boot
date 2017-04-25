@@ -1,4 +1,5 @@
 package com.vaya.services;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +73,15 @@ public class MemberService {
 	public Long findIdByUsername(String username) {
 		Member member = memberRepository.findByEmail(username);
 		return member.getMemberId();
+	}
+
+
+	public Member editUserinfo(Principal principal) {
+		for(Member member : list()) {
+			if(member.getEmail().equals(principal.getName())) {
+				return member;
+			}
+		}
+		return null;
 	}
 }

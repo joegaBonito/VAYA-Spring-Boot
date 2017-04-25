@@ -1,27 +1,17 @@
 package com.vaya.controllers.admin;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,12 +22,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vaya.domain.Member;
 import com.vaya.domain.Post;
-import com.vaya.excel.FileUploadValidator;
 import com.vaya.services.EtcService;
 import com.vaya.services.MeetingService;
 import com.vaya.services.MemberService;
@@ -54,19 +42,16 @@ public class AdminPostsController {
 	private EtcService etcService;
 	private MeetingService meetingService;
 	private RetreatService retreatService;
-	private FileUploadValidator fileValidator;
 
 	@Autowired
 	public AdminPostsController(PostService postService, MemberService memberService, TeamService teamService,
-			EtcService etcService, MeetingService meetingService, RetreatService retreatService,
-			FileUploadValidator fileValidator) {
+			EtcService etcService, MeetingService meetingService, RetreatService retreatService) {
 		this.postService = postService;
 		this.memberService = memberService;
 		this.teamService = teamService;
 		this.etcService = etcService;
 		this.meetingService = meetingService;
 		this.retreatService = retreatService;
-		this.fileValidator = fileValidator;
 	}
 
 	@RequestMapping("/admin/posts")

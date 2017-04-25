@@ -21,7 +21,6 @@ import com.vaya.domain.Member;
 import com.vaya.services.MemberService;
 
 @Controller
-@RequestMapping("/members")
 public class MemberController {
 	
 	private MemberService memberService;
@@ -33,20 +32,19 @@ public class MemberController {
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
-	@RequestMapping("/list")
+	@RequestMapping("/members/list")
 	public String list(Principal principal,Model model){
-		model.addAttribute("userId",memberService.findIdByUsername(principal.getName()));
 		model.addAttribute("members", memberService.list());
 		return "/members/list";
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
-	@RequestMapping("/view")
+	@RequestMapping("/members/view")
 	public String view(Model model){
 		return "/members/view";
 	}
 	
-	@RequestMapping("/createMember")
+	@RequestMapping("/members/createMember")
 	public String createAuthor(Model model) {
 		Member member = new Member();
 		member.setRole("GUEST");
@@ -54,7 +52,7 @@ public class MemberController {
 		return "auth/createaccount";
 	}
 	
-	@RequestMapping(value = "/processForm", method = RequestMethod.POST)
+	@RequestMapping(value = "/members/processForm", method = RequestMethod.POST)
 	public String processForm(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
 			return "/auth/createaccount";
@@ -66,14 +64,14 @@ public class MemberController {
 		return "auth/login";
 	}
 	
-	@RequestMapping("/edit/{userId}")
-	public String edit(@PathVariable Long userId, Model model){
-		model.addAttribute("member",memberService.get(userId));
+	@RequestMapping("/members/editUserInfo")
+	public String editUserInfo(Principal principal, Model model){
+		model.addAttribute("member",memberService.editUserinfo(principal));
 		model.addAttribute("roles", memberService.roles());
 		return "/members/memberForm";		
 	}
 	
-	@RequestMapping(value ="/save", method = RequestMethod.POST )
+	@RequestMapping(value ="/members/save", method = RequestMethod.POST )
 	public String editSave(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {				
 		if(bindingResult.hasErrors()){
 			model.addAttribute("roles", memberService.roles());
