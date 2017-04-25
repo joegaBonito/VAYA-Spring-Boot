@@ -138,6 +138,20 @@
 						Upload Errors</span>
 				</div>
 			</div>
+			<div th:class="form-group"
+				th:classappend="${#fields.hasErrors('approval')}? 'has-error'">
+				<label class="col-sm-2 control-label">Approval<span
+					class="required">*</span></label>
+				<div class="col-md-10">
+					<select class="form-control" th:field="*{approval}">
+						<option value="" class="">Select Member</option>
+						<option th:value="pending">Pending</option>
+						<option th:value="approved">Approved</option>
+					</select> 
+					<span th:if="${#fields.hasErrors('approval')}"
+						th:errors="*{approval}" th:class="help-block">Approval Errors</span>
+				</div>
+			</div>
 			<button type="submit" class="btn btn-primary pull-right">Submit</button>
 		</form>
 

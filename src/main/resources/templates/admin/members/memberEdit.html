@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+<title>Create New Member</title>
+<link rel="stylesheet" href="../static/css/admin/members/memberForm.css"
+	th:href="@{/css/admin/members/memberForm.css}" />
+</head>
+<body>
+
+	<div id="insideDiv" layout:fragment="content">
+
+		<h2>Create New Member</h2>
+		<br />
+
+		<form class="form-horizontal" th:object="${member}"
+			th:action="@{/admin/members/save}" method="post">
+			<input type="hidden" th:field="*{memberId}"></input>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+						<label for="inputName" class="col-lg-2">Name</label>
+						<div class="col-lg-10">
+							<input type="text" th:field="*{name}" class="form-control"
+								id="inputName" placeholder="Name"></input>
+								<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="help-block" style="color:red;font-size:20px;">Name Errors</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+						<label for="inputEmail" class="col-lg-2">Email*</label>
+						<div class="col-lg-10">
+							<input type="text" th:field="*{email}" class="form-control"
+								id="inputEmail" placeholder="Email"></input>
+								<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:class="help-block" style="color:red;font-size:20px;">Email Errors</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="inputPassword" class="col-lg-2">Password</label>
+						<div class="col-lg-10">
+							<input type="password" th:field="*{password}"
+								class="form-control" id="inputPassword" placeholder="Password"></input>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="inputConfirmPassword" class="col-lg-2">Confirm
+							Password</label>
+						<div class="col-lg-10">
+							<input type="password" th:field="*{confirmPassword}" 
+							class="form-control" id="inputConfirmPassword" placeholder="Confirm Password"></input>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group" th:classappend="${#fields.hasErrors('role')}? 'has-error'">
+						<label for="inputRole" class="col-lg-2">Role</label>
+						<div class="col-lg-10">
+							<select th:field="*{role}" class="form-control" id="inputRole">
+								<option th:each="role : ${roles}" th:value="${role}" th:text="${role}">role</option>
+							</select>
+							<span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" th:class="help-block" style="color:red;font-size:20px;">Name Errors</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary pull-right">Submit</button>
+		</form>
+
+		<br /> <br /> <br />
+
+	</div>
+
+</body>
+</html>

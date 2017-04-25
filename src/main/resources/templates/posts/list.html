@@ -1,31 +1,55 @@
 <!DOCTYPE html>
-<html lang="en"
-	xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 	layout:decorator="layouts/main">
 <head>
-	<title>List Posts</title>
-	<link rel="stylesheet" href="../static/css/posts/list.css" th:href="@{/css/posts/list.css}"/>
+<title>List Posts</title>
+<link rel="stylesheet" href="../static/css/posts/list.css"
+	th:href="@{/css/posts/list.css}" />
 </head>
 <body>
-		
+
 	<div id="insideDiv" layout:fragment="content">
-	
-	    <div style="margin-bottom:0.2rem;padding:.8rem;border:2px solid #eceeef" th:each="post : ${posts}">
-			<header>
-				<a id="title" th:href="|@{/posts/view/}${post.postId}|" th:text="${post.title}"></a>
-				<p class="each-article" th:text="${#calendars.format(post.postedOn,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member.name}">postedOn member.name</p>
-				<button type="button" class="btn btn-primary pull-right" th:if="${post.member.email == owner}"><a class="button-txt-color" style="color:white; padding-left:0px;" th:href="@{/posts/edit/} + ${post.postId}">Edit</a></button>
-				<button type="button" class="btn btn-primary pull-right" th:if="${post.member.email == owner}"><a class="button-txt-color" style="color:white; padding-left:0px;"  th:href="@{/posts/delete/} + ${post.postId}">Delete</a></button>
-			</header>
+		<div class="row">
+			<div class="col-lg-12">
+				<div
+					style="margin-bottom: 0.2rem; padding: .8rem; border: 2px solid #eceeef"
+					th:each="post : ${posts}"
+					th:class="${post.approval == 'pending'} ? pendingClass">
+					<header>
+						<a id="title" th:href="|@{/posts/view/}${post.postId}|"
+							th:text="${post.title}"></a>
+						<p class="each-article"
+							th:text="${#calendars.format(post.postedOn,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member.name}">postedOn
+							member.name</p>
+						<button type="button" class="btn btn-primary pull-right"
+							th:if="${post.member.email == owner}">
+							<a class="button-txt-color"
+								style="color: white; padding-left: 0px;"
+								th:href="@{/posts/edit/} + ${post.postId}">Edit</a>
+						</button>
+						<button type="button" class="btn btn-primary pull-right"
+							th:if="${post.member.email == owner}">
+							<a class="button-txt-color"
+								style="color: white; padding-left: 0px;"
+								th:href="@{/posts/delete/} + ${post.postId}">Delete</a>
+						</button>
+					</header>
+				</div>
+			</div>
 		</div>
-		<br/>
+		<br />
 		<p th:if="${posts.size() == 0}">
-			<div class="alert alert-warning" role="alert">No Posts Found.</div>
+		<div class="alert alert-warning" role="alert">No Posts Found.</div>
 		</p>
-		
-		<button type="button" class="btn btn-primary pull-right" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})"><a class="button-txt-color" style="color:white;padding-left:0px;"  th:href="@{/posts/create}">Add New Post</a></button>
-		<br/><br/>
+
+		<button type="button" class="btn btn-primary pull-right"
+			sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+			<a class="button-txt-color" style="color: white; padding-left: 0px;"
+				th:href="@{/posts/create}">Add New Post</a>
+		</button>
+		<br />
+		<br />
 	</div>
-		
+
 </body>
 </html>

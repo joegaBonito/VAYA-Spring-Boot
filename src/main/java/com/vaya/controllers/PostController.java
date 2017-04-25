@@ -100,7 +100,9 @@ public class PostController {
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/create")
 	public String create(Principal principal, Model model) {
-		model.addAttribute("post", new Post());		 
+		Post post = new Post();
+		post.setApproval("pending");
+		model.addAttribute("post",post);		 
 		model.addAttribute("members", memberService.list());
 		model.addAttribute("teams", teamService.teamList());
 		model.addAttribute("etcs", etcService.etcList());

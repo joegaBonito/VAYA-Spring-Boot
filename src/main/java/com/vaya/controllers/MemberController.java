@@ -1,5 +1,7 @@
 package com.vaya.controllers;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,15 +35,16 @@ public class MemberController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list")
-	public String list(Model model){
+	public String list(Principal principal,Model model){
+		model.addAttribute("userId",memberService.findIdByUsername(principal.getName()));
 		model.addAttribute("members", memberService.list());
-		return "members/list";
+		return "/members/list";
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/view")
 	public String view(Model model){
-		return "members/view";
+		return "/members/view";
 	}
 	
 	@RequestMapping("/createMember")
@@ -61,6 +65,23 @@ public class MemberController {
 		}
 		memberService.save(member);
 		return "auth/login";
+	}
+	
+	@RequestMapping("/edit/{userId}")
+	public String edit(@PathVariable Long userId, Model model){
+		model.addAttribute("member",memberService.get(userId));
+		model.addAttribute("roles", memberService.roles());
+		return "/members/memberForm";		
+	}
+	
+	@RequestMapping(value ="/save", method = RequestMethod.POST )
+	public String editSave(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {				
+		if(bindingResult.hasErrors()){
+			model.addAttribute("roles", memberService.roles());
+			return "/members/memberForm";
+		} 
+		memberService.editSave(member);
+	    return "redirect:/members/list";	
 	}
 	
 	@InitBinder

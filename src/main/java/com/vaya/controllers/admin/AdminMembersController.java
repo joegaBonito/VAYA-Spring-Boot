@@ -1,5 +1,7 @@
 package com.vaya.controllers.admin;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,7 @@ public class AdminMembersController{
 	public String edit(@PathVariable Long id, Model model){
 		model.addAttribute("member",memberService.get(id));
 		model.addAttribute("roles", memberService.roles());
-		return "admin/members/memberForm";		
+		return "admin/members/memberEdit";		
 	}
 	
 	

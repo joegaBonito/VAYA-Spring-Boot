@@ -98,7 +98,9 @@ public class AdminPostsController {
 
 	@RequestMapping("/admin/post/create/")
 	public String create(Principal principal, Model model) {
-		model.addAttribute("post", new Post());
+		Post post = new Post();
+		post.setApproval("pending");
+		model.addAttribute("post",post);
 		/*
 		 * Used when logged in user's email is directly used as the owner of a
 		 * post.

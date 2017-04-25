@@ -11,7 +11,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
 	crossorigin="anonymous" />
-
 <link href='https://fonts.googleapis.com/css?family=Roboto'
 	rel='stylesheet' type='text/css' />
 <link href='https://fonts.googleapis.com/css?family=Exo'
@@ -67,7 +66,7 @@
 						th:action="@{/logout}" method="post" class="form-inline"
 						style="white-space: nowrap;">
 						<div style="white-space: nowrap;">
-							<span sec:authentication="name">Name</span>&nbsp; | &nbsp; <a
+							<a sec:authentication="name" th:href="@{/members/edit/} + ${userId}">Name</a>&nbsp; | &nbsp; <a
 								href="javascript:{}"
 								onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
 						</div>

@@ -1,5 +1,7 @@
 package com.vaya.services;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +74,11 @@ public class MemberService {
 		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		member.setRole(member.getRole());
 		memberRepository.save(member);
+	}
+
+
+	public Long findIdByUsername(String username) {
+		Member member = memberRepository.findByEmail(username);
+		return member.getMemberId();
 	}
 }

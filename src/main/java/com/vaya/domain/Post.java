@@ -58,9 +58,13 @@ public class Post {
 	@NotEmpty
 	@Column(columnDefinition = "TEXT")
 	private String body;
+	
+	@NotEmpty
+	@Column(columnDefinition = "TEXT")
+	private String approval;
 
 	public Post(Long postId, String title, Date postedOn, double quantity, Member member, Team team, Retreat retreat,
-			Etc etc, Meeting meeting, String body, byte[] fileData) {
+			Etc etc, Meeting meeting, byte[] fileData, String body, String approval) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -71,8 +75,9 @@ public class Post {
 		this.retreat = retreat;
 		this.etc = etc;
 		this.meeting = meeting;
-		this.body = body;
 		this.fileData = fileData;
+		this.body = body;
+		this.approval = approval;
 	}
 
 	public Post() {
@@ -165,5 +170,13 @@ public class Post {
 
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
+	}
+
+	public String getApproval() {
+		return approval;
+	}
+
+	public void setApproval(String approval) {
+		this.approval = approval;
 	}
 }

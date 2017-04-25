@@ -16,6 +16,7 @@
 		<form class="form-horizontal" th:object="${post}"
 			th:action="@{/posts/save}" method="post" enctype="multipart/form-data">
 			<input type="hidden" th:field="*{postId}" />
+			<input type="hidden" th:field="*{approval}" />
 			<!-- When logged in user's email needs to be input
 			   <input type="hidden" id="member" name="member" th:value="${member.memberId}"/> 
 			-->
