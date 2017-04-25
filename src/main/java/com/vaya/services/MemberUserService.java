@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.vaya.domain.Member;
-import com.vaya.domain.Role;
 import com.vaya.repositories.MemberRepository;
 
 @Service

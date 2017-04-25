@@ -1,19 +1,12 @@
 package com.vaya.services;
-
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 
 import com.vaya.domain.Member;
-import com.vaya.domain.Role;
 import com.vaya.repositories.MemberRepository;
 @Service
 public class MemberService {
@@ -41,7 +34,6 @@ public class MemberService {
 
 
 	public Member get(Long id) {
-		Member member = memberRepository.findOne(id);
 		return memberRepository.findOne(id);
 	}
 

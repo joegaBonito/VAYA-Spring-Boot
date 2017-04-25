@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.vaya.domain.Member;
-import com.vaya.domain.Role;
 import com.vaya.services.MemberService;
 
 @Controller
