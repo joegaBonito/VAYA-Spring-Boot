@@ -31,7 +31,7 @@
 			</button>
 			<a class="navbar-brand" href="/">VAYA</a>
 			<div class="collapse navbar-collapse" id="obs-nav-dropdown">
-				<ul class="navbar-nav">
+				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item dropdown active"><a
 						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
@@ -62,21 +62,23 @@
 								class="dropdown-item" href="/admin/accountings/">Accounting</a>
 						</div></li>
 				</ul>
-			</div>
+			
 			<div class="navbar-text navbar-right" style="white-space: nowrap;">
-				<form sec:authorize="isAuthenticated()" id="frmlogout"
-					th:action="@{/logout}" method="post" class="form-inline"
-					style="white-space: nowrap;">
-					<div style="white-space: nowrap;">
-						<span sec:authentication="name">Name</span>&nbsp; | &nbsp; <a
-							href="javascript:{}"
-							onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+					<form sec:authorize="isAuthenticated()" id="frmlogout"
+						th:action="@{/logout}" method="post" class="form-inline"
+						style="white-space: nowrap;">
+						<div style="white-space: nowrap;">
+							<span sec:authentication="name">Name</span>&nbsp; | &nbsp; <a
+								href="javascript:{}"
+								onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+						</div>
+					</form>
+					<div sec:authorize="!isAuthenticated()"
+						style="white-space: nowrap;">
+						Anonymous User: <a th:href="@{/login}"> Login</a>
 					</div>
-				</form>
-				<div sec:authorize="!isAuthenticated()" style="white-space: nowrap;">
-					Anonymous User: <a th:href="@{/login}"> Login</a>
 				</div>
-			</div>
+				</div>
 		</nav>
 		<div style="margin: 5px 0px 5px 0px;" layout:fragment="content"></div>
 		<div class="col-lg-12 footer">
