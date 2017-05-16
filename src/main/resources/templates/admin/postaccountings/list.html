@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>List Posts</title>
+	<link rel="stylesheet" href="../admin/postaccountings/list.css" th:href="@{/css/admin/postaccountings/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+		<h2>Accounting Posts</h2>
+		
+		<div th:if="${message}" class="alert alert-success" role="alert">
+			<p th:text="${message}">success message</p>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Posted On</th>
+					<th>Member</th>
+					<th>Team Name</th>
+					<th>Meeting </th>
+					<th>Etc</th>
+					<th>Retreat</th>
+					<th>Quantity</th>
+					<th>View</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="post : ${posts}" th:class="${post.approval == 'pending'} ? pendingClass">
+					<td th:text="${post.title}">title</td>
+					<td th:text="${#calendars.format(post.postedOn,'M/dd/yyyy hh:mm:ss a')}">posted on</td>
+					<td th:text="${post.member.name}">Member</td>
+					<td th:text="${post.team} ? ${post.team.teamName} : ''">Team Name</td>
+					<th style="font-weight:normal" th:text="${post.meeting} ? ${post.meeting.meetingName} : ''">Meeting </th>
+					<th style="font-weight:normal" th:text="${post.etc} ? ${post.etc.etcName} : ''">Etc</th>
+					<th style="font-weight:normal" th:text="${post.retreat} ? ${post.retreat.retreatName} : ''">Retreat</th>
+					<td style="font-weight:normal" th:text="${post.quantity}">Quantity</td>
+					<td><a href="#" th:href="@{/admin/postaccountings/} + ${post.postId}">View</a></td>
+					<td><a href="#" th:href="@{/admin/postaccountings/edit/} + ${post.postId}">Edit</a></td>
+					<td><a href="#" th:href="@{/admin/postaccountings/delete/} + ${post.postId}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+			<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color"  th:href="@{/admin/postaccountings/create/}">Add New Post</a></button>
+		<br/><br/>
+		
+		<p th:if="${posts.size() == 0}">
+			<div class="alert alert-warning" role="alert">No Posts Found.</div>
+		</p>
+		
+	</div>
+		
+</body>
+</html>

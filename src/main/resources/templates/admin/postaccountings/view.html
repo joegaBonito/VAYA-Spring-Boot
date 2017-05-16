@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>View Posts</title>
+	<link rel="stylesheet" href="../static/css/admin/postaccountings/view.css" th:href="@{/css/admin/postaccountings/view.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+		<h2>View Post</h2>
+
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-lg-6 control-label">Title: </label>
+				<div class="col-md-10">
+					<p class="form-control-static" th:text="${post.title}">title</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Posted On:</label>
+				<div class="col-md-10">
+					<p class="form-control-static" th:text="${#calendars.format(post.postedOn, 'M/dd/yyyy hh:mm:ss a')}">postedOn</p>
+				</div>
+			</div>
+			<div class="form-group">
+		    	<label class="col-sm-2 control-label">Member:</label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.member.name}">member</p>
+		    	</div>
+		  	</div>	
+		  	<div class="form-group">
+		    	<label class="col-sm-2 control-label">Team: </label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.team} ? ${post.team.teamName} : 'Not a Team Expense'">Team</p>
+		    	</div>
+		  	</div>		
+		  	<div class="form-group">
+		    	<label class="col-sm-2 control-label">Meeting: </label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.meeting} ? ${post.meeting.meetingName} : 'Not a Meeting Expense'">Meeting</p>
+		    	</div>
+		  	</div>	 
+		  	<div class="form-group">
+		    	<label class="col-sm-2 control-label">Etc: </label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.etc} ? ${post.etc.etcName} : 'Not a ETC Expense'">Etc</p>
+		    	</div>
+		  	</div>	
+		  	<div class="form-group">
+		    	<label class="col-sm-2 control-label">Retreat: </label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.retreat} ? ${post.retreat.retreatName} : 'Not a Retreat Expense'">Retreat</p>
+		    	</div>
+		  	</div>	
+		  	 	
+
+			<div class="form-group">
+		    	<label class="col-sm-2 control-label">Quantity:</label>
+		    	<div class="col-md-10">
+		    		<p class="form-control-static" th:text="${post.quantity}">Quantity</p>
+		    	</div>
+		  	</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Body:</label>
+				<div class="col-md-10">
+					<p class="form-control-static" th:text="${post.body}">body</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Attachment:</label>
+				<div class="col-md-10">
+					<img th:src="@{/image/}+${post.postId}" height="500px"/>
+				</div>
+			</div>
+		</form>
+		
+		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/postaccountings/}">Back To Posts List</a></button>
+		
+		<br/><br/><br/>
+		
+	</div>
+		
+</body>
+</html>

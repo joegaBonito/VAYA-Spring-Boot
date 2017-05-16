@@ -35,18 +35,27 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						href="#" role="button">Posts</a>
+						href="#" role="button">Group</a>
 						<div class="dropdown-menu"
 							aria-labelledby="obs-nav-dropdown-menulink">
-							<a class="dropdown-item" href="/posts/list">List</a>
+							<a class="dropdown-item" href="/postsmallgroups/list">Small Group</a>
+							<a class="dropdown-item" href="/postteams/list">Team</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						href="#" role="button">Members</a>
+						href="#" role="button">Member</a>
 						<div class="dropdown-menu"
 							aria-labelledby="obs-nav-dropdown-menulink">
 							<a class="dropdown-item" href="/members/list">List</a>
+						</div></li>
+						<li class="nav-item dropdown" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})"><a
+						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						href="#" role="button">Reimbursement</a>
+						<div class="dropdown-menu"
+							aria-labelledby="obs-nav-dropdown-menulink">
+							<a class="dropdown-item" href="/postaccountings/list">List</a>
 						</div></li>
 					<li class="nav-item dropdown"
 						sec:authorize="hasAnyRole({'ROLE_ADMIN'})"><a
@@ -55,11 +64,14 @@
 						href="#" role="button">Admin</a>
 						<div class="dropdown-menu"
 							aria-labelledby="obs-nav-dropdown-menulink">
-							<a class="dropdown-item" href="/admin/posts/">Posts</a> <a
-								class="dropdown-item" href="/admin/members/">Members</a> <a
-								class="dropdown-item" href="/admin/team/list">Teams</a> <a
+							 <a
+								class="dropdown-item" href="/admin/members/">Member</a>
+								<a class="dropdown-item" href="/admin/postaccountings/">Reimbursement</a> <a
+								class="dropdown-item" href="/admin/team/list">Team</a> <a
 								class="dropdown-item" href="/admin/accountings/">Accounting</a>
 						</div></li>
+						<li class="nav-item"><a class="nav-link" href="/">Gallery</a></li>
+						<li class="nav-item"><a class="nav-link" href="/">About Us</a></li>
 				</ul>
 				<div class="navbar-text navbar-right" style="white-space: nowrap;">
 					<form sec:authorize="isAuthenticated()" id="frmlogout"
@@ -105,6 +117,6 @@
 		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
 		crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/js/index.js"></script>
-	<script type="text/javascript" src="/js/admin/posts/postForm.js"></script>
+	<script type="text/javascript" src="/js/admin/postaccountings/postForm.js"></script>
 </body>
 </html>

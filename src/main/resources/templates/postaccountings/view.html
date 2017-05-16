@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+<title th:text="|View Post - ${post.title}|">View Post</title>
+<link rel="stylesheet" href="../static/css/postaccountings/view.css"
+	th:href="@{/css/postaccountings/view.css}" />
+</head>
+<body>
+
+	<div id="insideDiv" layout:fragment="content">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item"><a href="/postaccountings/list">Posts</a></li>
+					<li class="breadcrumb-item active" th:text="${post.title}"></li>
+				</ol>
+
+				<article>
+					<header>
+						<h2 style="text-decoration: underline;" th:text="${post.title}">title</h2>
+						Posted By:&nbsp;<a th:href="|mailto:${post.member.email}|"><span th:text="|${post.member.name}|">member</span></a><br/>
+						<span th:text="${#calendars.format(post.postedOn,'M/dd/yyyy hh:mm a')}">postedOn</span><br/>
+						Approval Status:&nbsp;<span th:text="${post.approval}"> Approval</span>
+					</header>
+					<br/>
+					<section>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Team: </label>
+							<div class="col-md-10">
+								<p class="form-control-static"
+									th:text="${post.team} ? ${post.team.teamName} : 'Not a Team Expense'">Team</p>
+							</div>
+						</div>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Meeting: </label>
+							<div class="col-md-10">
+								<p class="form-control-static"
+									th:text="${post.meeting} ? ${post.meeting.meetingName} : 'Not a Meeting Expense'">Meeting</p>
+							</div>
+						</div>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Etc: </label>
+							<div class="col-md-10">
+								<p class="form-control-static"
+									th:text="${post.etc} ? ${post.etc.etcName} : 'Not a ETC Expense'">Etc</p>
+							</div>
+						</div>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Retreat: </label>
+							<div class="col-md-10">
+								<p class="form-control-static"
+									th:text="${post.retreat} ? ${post.retreat.retreatName} : 'Not a Retreat Expense'">Retreat</p>
+							</div>
+						</div>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Amount:</label>
+							<div class="col-md-10">
+								<p class="form-control-static" th:text="${post.quantity}">Amount</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Body:</label>
+							<div class="col-md-10">
+								<p class="form-control-static" th:text="${post.body}">body</p>
+							</div>
+						</div>
+						<div class="form-group"
+							sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+							<label class="col-sm-2 control-label">Attachment:</label>
+							<div class="col-md-10">
+								<img th:src="@{/image/}+${post.postId}" height="500px" />
+							</div>
+						</div>
+					</section>
+
+
+					<button type="button" class="btn btn-primary pull-right">
+						<a style="color: white;" class="button-txt-color"
+							th:href="@{/postaccountings/list}">Back To Posts List</a>
+					</button>
+					<br />
+					<br />
+					<br />
+
+				</article>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

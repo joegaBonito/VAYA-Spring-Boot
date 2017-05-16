@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
-import com.vaya.domain.Master;
+import com.vaya.master.domain.Master;
 
 @Component
 public class AccountingExcelExport extends AbstractXlsView {

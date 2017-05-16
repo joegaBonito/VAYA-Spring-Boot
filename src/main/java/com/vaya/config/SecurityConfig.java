@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.vaya.repositories.MemberRepository;
-import com.vaya.services.MemberUserService;
+import com.vaya.member.repositories.MemberRepository;
+import com.vaya.member.services.MemberUserService;
 
 
 @Configuration
