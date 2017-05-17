@@ -2,17 +2,22 @@ package com.vaya.postSmallGroup.controllers;
 
 import java.security.Principal;
 
+import javax.servlet.ServletException;
 import javax.validation.Valid;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.vaya.member.services.MemberService;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
@@ -88,5 +93,10 @@ public class PostSmallGroupController {
 	public String postEdit(@PathVariable(value="id") Long id) {
 		postSmallGroupServiceImpl.postDelete(id);
 		return "redirect:/postsmallgroups/list";
+	}
+	
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws ServletException {
+		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
 }

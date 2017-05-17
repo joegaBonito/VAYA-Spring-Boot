@@ -70,9 +70,8 @@ public class AdminPostAccountingController {
 	/*
 	 * Displays image to web from the database blob.
 	 */
-	@RequestMapping(value = "/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	@RequestMapping(value = "/postaccountings/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws IOException {
-
 		byte[] imageContent = postAccountingServiceImpl.get(id).getFileData();
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);

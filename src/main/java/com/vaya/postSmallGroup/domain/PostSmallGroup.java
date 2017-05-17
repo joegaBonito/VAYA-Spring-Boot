@@ -43,7 +43,7 @@ public class PostSmallGroup {
 	private Member member;
 	
 	@Column(name="file_data")
-	private  byte[] fileData;
+	private byte[] fileData;
 	
 	@NotEmpty
 	@Column(columnDefinition = "TEXT")
