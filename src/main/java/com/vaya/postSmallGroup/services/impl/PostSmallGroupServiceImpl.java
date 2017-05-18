@@ -36,4 +36,8 @@ public class PostSmallGroupServiceImpl implements PostSmallGroupService {
 		postSmallGroup.setDeleteYN('Y');
 		postSave(postSmallGroup);
 	}
+
+	public List<PostSmallGroup> listByMember(Long id) {
+		return postSmallGroupRepository.findAllByMemberMemberIdOrderByDateDescQuery(id);
+	}
 }

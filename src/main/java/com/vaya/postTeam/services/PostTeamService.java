@@ -8,4 +8,5 @@ public interface PostTeamService {
 	public List<PostTeam> list();
 	public PostTeam get(Long id);
 	public void postSave(PostTeam postTeam);
+	public void postDelete(Long id);
 }

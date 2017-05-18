@@ -7,14 +7,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.vaya.postAccounting.domain.PostAccounting;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
+import com.vaya.postTeam.domain.PostTeam;
+import com.vaya.smallgroup.domain.SmallGroup;
+import com.vaya.team.domain.Team;
 
 @Entity
 @Table(name="member")
@@ -51,11 +55,23 @@ public class Member {
 	
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="member")
 	private Set<PostSmallGroup> postSmallGroup;
+	
+	@OneToMany(cascade={CascadeType.ALL},mappedBy="member")
+	private Set<PostTeam> postTeam;
+	
+	@ManyToOne
+	@JoinColumn(name="team_id")
+	private Team team; 
+	
+	@ManyToOne
+	@JoinColumn(name="small_group_id")
+	private SmallGroup smallGroup; 
 
 	public Member() {}
 
 	public Member(Long memberId, String name, String email, String password, String confirmPassword, String role,
-			Set<PostAccounting> postAccounting, Set<PostSmallGroup> postSmallGroup) {
+			Set<PostAccounting> postAccounting, Set<PostSmallGroup> postSmallGroup, Set<PostTeam> postTeam, Team team,
+			SmallGroup smallGroup) {
 		super();
 		this.memberId = memberId;
 		this.name = name;
@@ -65,6 +81,9 @@ public class Member {
 		this.role = role;
 		this.postAccounting = postAccounting;
 		this.postSmallGroup = postSmallGroup;
+		this.postTeam = postTeam;
+		this.team = team;
+		this.smallGroup = smallGroup;
 	}
 
 	public Long getMemberId() {
@@ -119,7 +138,7 @@ public class Member {
 		return postAccounting;
 	}
 
-	public void setPost(Set<PostAccounting> postAccounting) {
+	public void setPostAccounting(Set<PostAccounting> postAccounting) {
 		this.postAccounting = postAccounting;
 	}
 
@@ -129,5 +148,29 @@ public class Member {
 
 	public void setPostSmallGroup(Set<PostSmallGroup> postSmallGroup) {
 		this.postSmallGroup = postSmallGroup;
+	}
+
+	public Set<PostTeam> getPostTeam() {
+		return postTeam;
+	}
+
+	public void setPostTeam(Set<PostTeam> postTeam) {
+		this.postTeam = postTeam;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
+	public SmallGroup getSmallGroup() {
+		return smallGroup;
+	}
+
+	public void setSmallGroup(SmallGroup smallGroup) {
+		this.smallGroup = smallGroup;
 	}
 }

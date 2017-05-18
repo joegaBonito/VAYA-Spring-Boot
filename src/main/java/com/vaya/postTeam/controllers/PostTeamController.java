@@ -1,4 +1,4 @@
-package com.vaya.postSmallGroup.controllers;
+package com.vaya.postTeam.controllers;
 
 import java.security.Principal;
 
@@ -21,18 +21,19 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.vaya.member.services.MemberService;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
-import com.vaya.postSmallGroup.services.impl.PostSmallGroupServiceImpl;
+import com.vaya.postTeam.domain.PostTeam;
+import com.vaya.postTeam.services.impl.PostTeamServiceImpl;
 
 @Controller
-@RequestMapping("/postsmallgroups")
-public class PostSmallGroupController {
+@RequestMapping("/postteams")
+public class PostTeamController {
 	
 	private MemberService memberService;
-	private PostSmallGroupServiceImpl postSmallGroupServiceImpl;
+	private PostTeamServiceImpl postTeamServiceImpl;
 	
 	@Autowired
-	public PostSmallGroupController(PostSmallGroupServiceImpl postSmallGroupServiceImpl, MemberService memberService) {
-		this.postSmallGroupServiceImpl = postSmallGroupServiceImpl; 
+	public PostTeamController(PostTeamServiceImpl postTeamServiceImpl, MemberService memberService) {
+		this.postTeamServiceImpl = postTeamServiceImpl; 
 		this.memberService = memberService;
 	}
 	
@@ -44,22 +45,22 @@ public class PostSmallGroupController {
 		 * post.
 		 */
 		model.addAttribute("owner",principal.getName());
-		model.addAttribute("posts",postSmallGroupServiceImpl.list());
-		return "/postsmallgroups/list";
+		model.addAttribute("posts",postTeamServiceImpl.list());
+		return "/postteams/list";
 	}
 	
 	@RequestMapping("/view/{id}")
 	public String postView(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("post",postSmallGroupServiceImpl.get(id));	
-		return "/postsmallgroups/view"; 
+		model.addAttribute("post",postTeamServiceImpl.get(id));	
+		return "/postteams/view"; 
 	}
 	
 	@RequestMapping("/create") 
 	public String postCreate(Model model){
-		PostSmallGroup post = new PostSmallGroup();
+		PostTeam post = new PostTeam();
 		post.setDeleteYN('N');
 		model.addAttribute("post",post);
-		return "/postsmallgroups/postForm";
+		return "/postteams/postForm";
 	}
 	
 	@RequestMapping(value="/postForm", method= RequestMethod.POST)
@@ -67,39 +68,39 @@ public class PostSmallGroupController {
 							 Model model,
 							 BindingResult bindingResult){
 		model.addAttribute("post",postSmallGroup);
-		return "redirect:/postsmallgroups/list";
+		return "redirect:/postteams/list";
 	}
 	
 	@RequestMapping(value ="/save", method = RequestMethod.POST )
-	public String postSave(Principal principal, @Valid PostSmallGroup postSmallGroup, BindingResult bindingResult, Model model) {				
+	public String postSave(Principal principal, @Valid PostTeam postTeam, BindingResult bindingResult, Model model) {				
 		/*if(bindingResult.hasErrors()){
 			model.addAttribute("post", postSmallGroup);
 			return "/postsmallgroups/postForm";
 		} */
-		postSmallGroup.setMember(memberService.findByEmail(principal.getName()));
-		postSmallGroupServiceImpl.postSave(postSmallGroup);
-		return "redirect:/postsmallgroups/view/" + postSmallGroup.getId();	
+		postTeam.setMember(memberService.findByEmail(principal.getName()));
+		postTeamServiceImpl.postSave(postTeam);
+		return "redirect:/postteams/view/" + postTeam.getId();	
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/edit/{id}")
 	public String postEdit(@PathVariable(value="id") Long id, Model model) {
-		model.addAttribute("post",postSmallGroupServiceImpl.get(id));
-		return "/postsmallgroups/postForm";
+		model.addAttribute("post",postTeamServiceImpl.get(id));
+		return "/postteams/postForm";
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/delete/{id}")
 	public String postEdit(@PathVariable(value="id") Long id) {
-		postSmallGroupServiceImpl.postDelete(id);
-		return "redirect:/postsmallgroups/list";
+		postTeamServiceImpl.postDelete(id);
+		return "redirect:/postteams/list";
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
 	public String byAuthor(@PathVariable(value="id") Long id, Model model){
-		model.addAttribute("posts", postSmallGroupServiceImpl.listByMember(id));
-		return "/postsmallgroups/list";
+		model.addAttribute("posts", postTeamServiceImpl.listByMember(id));
+		return "/postteams/list";
 	}
 	
 	@InitBinder

@@ -20,7 +20,7 @@ public class PostTeamServiceImpl implements PostTeamService {
 	}
 	
 	public List<PostTeam> list() {
-		return postTeamRepository.findAllByOrderByDateDesc();
+		return postTeamRepository.findAllByDeleteYNorderbyDateDesc();
 	}
 
 	public PostTeam get(Long id) {
@@ -29,5 +29,16 @@ public class PostTeamServiceImpl implements PostTeamService {
 
 	public void postSave(PostTeam postTeam) {
 		postTeamRepository.save(postTeam); 
+	}
+
+	public void postDelete(Long id) {
+		PostTeam postTeam = postTeamRepository.findOne(id);
+		postTeam.setDeleteYN('Y');
+		postSave(postTeam);
+		
+	}
+
+	public List<PostTeam> listByMember(Long id) {
+		return postTeamRepository.findAllByMemberMemberIdOrderByDateDescQuery(id);
 	}
 }

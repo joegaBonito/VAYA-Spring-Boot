@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.vaya.member.domain.Member;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
 
 @Entity
@@ -26,17 +27,21 @@ public class SmallGroup {
 
 	@OneToMany(cascade={CascadeType.ALL}, mappedBy = "smallGroup")
 	private List<PostSmallGroup> postSmallGroup;
+	
+	@OneToMany(cascade={CascadeType.ALL},mappedBy="smallGroup")
+	private List<Member> member;
 
 	public SmallGroup() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SmallGroup(Long id, String name, List<PostSmallGroup> postSmallGroup) {
+	public SmallGroup(Long id, String name, List<PostSmallGroup> postSmallGroup,List<Member> member) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.postSmallGroup = postSmallGroup;
+		this.member = member;
 	}
 
 	public Long getId() {
@@ -62,4 +67,13 @@ public class SmallGroup {
 	public void setPostSmallGroup(List<PostSmallGroup> postSmallGroup) {
 		this.postSmallGroup = postSmallGroup;
 	}
+
+	public List<Member> getMember() {
+		return member;
+	}
+
+	public void setMember(List<Member> member) {
+		this.member = member;
+	}
+	
 }

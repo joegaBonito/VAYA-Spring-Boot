@@ -16,7 +16,8 @@
 					<th>#</th> 
 					<th>Name</th> 
 					<th>Email</th> 
-					<th>Posts By Member</th>
+					<th>Small Group Posts By Member</th>
+					<th>Team Posts By Member</th>
 				</tr> 
 			</thead>
 			<tbody>
@@ -24,7 +25,8 @@
 					<td th:text="${iterationStatus.count}">1</td>
 					<td th:text="${member.name}">Name</td>
 					<td th:text="${member.email}">Email Address</td>
-					<td><a th:href="|/posts/byMember/${member.memberId}|">Posts By Member</a></td>
+					<td><a th:href="|/postsmallgroups/byMember/${member.memberId}|">Posts By Member</a></td>
+					<td><a th:href="|/postteams/byMember/${member.memberId}|">Posts By Member</a></td>
 				</tr>
 			</tbody>
 		</table>

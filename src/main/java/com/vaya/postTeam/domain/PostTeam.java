@@ -52,10 +52,13 @@ public class PostTeam {
 	@ManyToOne
 	@JoinColumn(name="team_id")
 	private Team team;
+	
+	@Column(name="delete_YN")
+	private char deleteYN;
 
 	public PostTeam() {}
 	
-	public PostTeam(Long id, String title, Date date, Member member, byte[] fileData, String body,  Team team) {
+	public PostTeam(Long id, String title, Date date, Member member, byte[] fileData, String body,  Team team, char deleteYN) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -64,6 +67,7 @@ public class PostTeam {
 		this.fileData = fileData;
 		this.body = body;
 		this.team = team;
+		this.deleteYN =deleteYN;
 	}
 
 	public Long getId() {
@@ -121,5 +125,10 @@ public class PostTeam {
 	public void setTeam(Team team) {
 		this.team = team;
 	}
-
+	public char getDeleteYN() {
+		return deleteYN;
+	}
+	public void setDeleteYN(char deleteYN) {
+		this.deleteYN = deleteYN;
+	}
 }

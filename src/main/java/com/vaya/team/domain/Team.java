@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import com.vaya.accounting.domain.Accounting;
 import com.vaya.postTeam.domain.PostTeam;
 import com.vaya.master.domain.Master;
+import com.vaya.member.domain.Member;
 import com.vaya.postAccounting.domain.PostAccounting;
 
 @Entity
@@ -44,12 +45,15 @@ public class Team {
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="team")
 	private List<PostTeam> postTeam;
 	
+	@OneToMany(cascade={CascadeType.ALL},mappedBy="team")
+	private List<Member> member;
+	
 	public Team() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Team(Long teamId, String teamName, Accounting accounting, Set<PostAccounting> postAccounting, Master masterId, List<PostTeam> postTeam) {
+	public Team(Long teamId, String teamName, Accounting accounting, Set<PostAccounting> postAccounting, Master masterId, List<PostTeam> postTeam, List<Member> member) {
 		super();
 		this.teamId = teamId;
 		this.teamName = teamName;
@@ -57,6 +61,7 @@ public class Team {
 		this.postAccounting = postAccounting;
 		this.masterId = masterId;
 		this.postTeam =postTeam;
+		this.member =member;
 	}
 
 	public Long getTeamId() {
@@ -105,5 +110,13 @@ public class Team {
 
 	public void setPostTeam(List<PostTeam> postTeam) {
 		this.postTeam = postTeam;
+	}
+
+	public List<Member> getMember() {
+		return member;
+	}
+
+	public void setMember(List<Member> member) {
+		this.member = member;
 	}
 }
