@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>List Posts</title>
+	<link rel="stylesheet" href="../static/css/admin/smallgroups/list.css" th:href="@{/css/admin/smallgroups/list.css}"/>
+</head>
+<body>
+		
+	<div id="insideDiv" layout:fragment="content">
+	
+		<h2>Small Groups</h2>
+		
+		<div th:if="${message}" class="alert alert-success" role="alert">
+			<p th:text="${message}">success message</p>
+		</div>
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Small Group</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="smallGroup : ${smallGroups}">
+					<td th:text="${smallGroup.name}">Small Group</td>
+					<td><a href="#" th:href="@{/admin/smallgroup/delete/} + ${smallGroup.id}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		
+		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/smallgroup/create}">Add New Small Group</a></button>
+		<br/><br/>
+		
+		<p th:if="${smallGroups.size() == 0}">
+			<div class="alert alert-warning" role="alert">No Small Groups Found.</div>
+		</p>
+		
+	</div>
+		
+</body>
+</html>

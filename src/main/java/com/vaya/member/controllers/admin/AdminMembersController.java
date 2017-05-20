@@ -18,17 +18,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vaya.member.domain.Member;
 import com.vaya.member.services.MemberService;
+import com.vaya.smallgroup.services.impl.SmallGroupServiceImpl;
+import com.vaya.team.services.impl.TeamServiceImpl;
 
 @Controller
 @Secured({"ROLE_ADMIN"})
 public class AdminMembersController{
 
 	private MemberService memberService;
+	private TeamServiceImpl teamServiceImpl;
+	private SmallGroupServiceImpl smallGroupServiceImpl;
 	
 	
 	@Autowired
-	public AdminMembersController(MemberService memberService) {
+	public AdminMembersController(MemberService memberService, TeamServiceImpl teamServiceImpl, SmallGroupServiceImpl smallGroupServiceImpl) {
 		this.memberService = memberService;
+		this.teamServiceImpl =teamServiceImpl;
+		this.smallGroupServiceImpl = smallGroupServiceImpl;
 	}
 	
 	@RequestMapping("/admin/members")
@@ -49,6 +55,8 @@ public class AdminMembersController{
 		model.addAttribute("member", new Member());
 		model.addAttribute("members", memberService.list());
 		model.addAttribute("roles", memberService.roles());
+		model.addAttribute("teams", teamServiceImpl.teamList());
+		model.addAttribute("smallGroups", smallGroupServiceImpl.list());
 		return "admin/members/memberForm";
 	}
 	@RequestMapping(value = "/admin/members/save", method = RequestMethod.POST )
@@ -65,6 +73,8 @@ public class AdminMembersController{
 	public String edit(@PathVariable Long id, Model model){
 		model.addAttribute("member",memberService.get(id));
 		model.addAttribute("roles", memberService.roles());
+		model.addAttribute("teams", teamServiceImpl.teamList());
+		model.addAttribute("smallGroups", smallGroupServiceImpl.list());
 		return "admin/members/memberEdit";		
 	}
 	
