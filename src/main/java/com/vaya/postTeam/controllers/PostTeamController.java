@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import com.vaya.member.domain.Member;
 import com.vaya.member.services.MemberService;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
 import com.vaya.postTeam.domain.PostTeam;
@@ -41,10 +42,13 @@ public class PostTeamController {
 	@RequestMapping("/list") 
 	public String postList(Principal principal, Model model) {
 		/*
-		 * Used when logged in user's email is directly used as the owner of a
-		 * post.
+		 * This method only allows the same small group members to see their posts.
 		 */
-		model.addAttribute("owner",principal.getName());
+		for(Member member: memberService.list()) {
+			if(member.getEmail().equals(principal.getName())) {
+				model.addAttribute("OwnerTeam",member.getTeam());
+			}
+		}
 		model.addAttribute("posts",postTeamServiceImpl.list());
 		return "/postteams/list";
 	}
@@ -78,6 +82,14 @@ public class PostTeamController {
 			return "/postsmallgroups/postForm";
 		} */
 		postTeam.setMember(memberService.findByEmail(principal.getName()));
+		/*
+		 * This method sets the smallGroup id to the newly created postSmallGroup entity.
+		 */
+		for(Member member: memberService.list()) {
+			if(member.getEmail().equals(principal.getName())) {
+				postTeam.setTeam(member.getTeam());
+			}
+		}
 		postTeamServiceImpl.postSave(postTeam);
 		return "redirect:/postteams/view/" + postTeam.getId();	
 	}
@@ -98,8 +110,16 @@ public class PostTeamController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
-	public String byAuthor(@PathVariable(value="id") Long id, Model model){
+	public String byAuthor(@PathVariable(value="id") Long id, Model model, Principal principal){
 		model.addAttribute("posts", postTeamServiceImpl.listByMember(id));
+		/*
+		 * This method only allows the same small group members to see their posts.
+		 */
+		for(Member member: memberService.list()) {
+			if(member.getEmail().equals(principal.getName())) {
+				model.addAttribute("OwnerTeam",member.getTeam());
+			}
+		}
 		return "/postteams/list";
 	}
 	
