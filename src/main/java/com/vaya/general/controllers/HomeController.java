@@ -12,4 +12,16 @@ public class HomeController {
 	public String home(Model model){
 		return "index";
 	}
+	@RequestMapping("/error/error401")
+    public String error401() {
+        return "/error/error401";
+    }
+	@RequestMapping("/error/error404")
+    public String error404() {
+        return "/error/error404";
+    }
+	@RequestMapping("/error/error500")
+    public String error500() {
+        return "/error/error500";
+    }
 }
