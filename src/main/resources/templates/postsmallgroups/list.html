@@ -12,8 +12,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div style="margin-bottom: 0.2rem; padding: .8rem; border: 2px solid #eceeef"
-					th:each="post : ${posts}">
-					<header th:if="${post.smallGroup == OwnerSmallGroup}">
+					th:each="post : ${posts}" th:if="${post.smallGroup == OwnerSmallGroup}">
+					<header >
 						<a id="title" th:href="|@{/postsmallgroups/view/}${post.id}|" th:text="${post.title}"></a>
 						<p class="each-article"	th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member == null ? '': post.member.name}">date 
 							member.name</p>
