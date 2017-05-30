@@ -42,9 +42,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	        @Override
 	        public void customize(ConfigurableEmbeddedServletContainer container) {
 	        	ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/error401");
+	        	ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/error/error403");
 	            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/error404");
 	            //ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/error500");
-	            container.addErrorPages(error401Page, error404Page);
+	            container.addErrorPages(error401Page, error403Page, error404Page);
 	        }
 	    };
 	}
