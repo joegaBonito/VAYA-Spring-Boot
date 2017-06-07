@@ -17,4 +17,5 @@
 <booleanAttribute key="spring.boot.livebean.enable" value="true"/>
 <stringAttribute key="spring.boot.livebean.port" value="0"/>
 <stringAttribute key="spring.boot.profile" value=""/>
+<stringAttribute key="spring.boot.prop.server.port:0" value="18006"/>
 </launchConfiguration>
