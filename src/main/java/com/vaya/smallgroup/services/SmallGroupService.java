@@ -1,11 +1,13 @@
 package com.vaya.smallgroup.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.vaya.smallgroup.domain.SmallGroup;
 
 public interface SmallGroupService {
-	public List<SmallGroup> list();
+	public Page<SmallGroup> list(Pageable pageable);
 	public void save(SmallGroup smallGroup);
 	public SmallGroup get(Long id);
+	public void delete(Long id);
 }

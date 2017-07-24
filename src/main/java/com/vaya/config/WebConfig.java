@@ -29,10 +29,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("auth/login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);		
 	}
-	@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new BaseInterceptor());
-	}
 	/*
 	 * This bean catches error and redirects.
 	 */

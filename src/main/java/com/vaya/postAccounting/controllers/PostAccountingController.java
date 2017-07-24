@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,10 +81,10 @@ public class PostAccountingController {
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/edit/{id}")
-	public String edit(@PathVariable(value="id") Long id, Model model) {
+	public String edit(@PathVariable(value="id") Long id, Model model,@PageableDefault(value=10) Pageable pageable) {
 		model.addAttribute("post",postAccountingServiceImpl.get(id));
-		model.addAttribute("members", memberService.list());
-		model.addAttribute("teams", teamServiceImpl.teamList());
+		model.addAttribute("members", memberService.list(pageable));
+		model.addAttribute("teams", teamServiceImpl.teamList(pageable));
 		model.addAttribute("etcs", etcServiceImpl.etcList());
 		model.addAttribute("meetings", meetingServiceImpl.meetingList());
 		model.addAttribute("retreats", retreatServiceImpl.retreatList());
@@ -99,12 +101,12 @@ public class PostAccountingController {
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/create")
-	public String create(Principal principal, Model model) {
+	public String create(Principal principal, Model model,@PageableDefault(value=10) Pageable pageable) {
 		PostAccounting post = new PostAccounting();
 		post.setApproval("pending");
 		model.addAttribute("post",post);		 
-		model.addAttribute("members", memberService.list());
-		model.addAttribute("teams", teamServiceImpl.teamList());
+		model.addAttribute("members", memberService.list(pageable));
+		model.addAttribute("teams", teamServiceImpl.teamList(pageable));
 		model.addAttribute("etcs", etcServiceImpl.etcList());
 		model.addAttribute("meetings", meetingServiceImpl.meetingList());
 		model.addAttribute("retreats", retreatServiceImpl.retreatList());
@@ -112,9 +114,9 @@ public class PostAccountingController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@Valid PostAccounting post, BindingResult bindingResult, Model model) {
+	public String save(@Valid PostAccounting post, BindingResult bindingResult, Model model,@PageableDefault(value=10) Pageable pageable) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("members", memberService.list());
+			model.addAttribute("members", memberService.list(pageable));
 			return "/postaccountings/postForm";
 		} else {
 			PostAccounting savedPost = postAccountingServiceImpl.save(post);

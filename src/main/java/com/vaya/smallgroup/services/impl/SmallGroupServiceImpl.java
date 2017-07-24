@@ -1,8 +1,8 @@
 package com.vaya.smallgroup.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vaya.smallgroup.domain.SmallGroup;
@@ -18,16 +18,22 @@ public class SmallGroupServiceImpl implements SmallGroupService {
 	public SmallGroupServiceImpl(SmallGroupRepository smallGroupRepository) {
 		this.smallGroupRepository = smallGroupRepository;
 	}
-
-	public List<SmallGroup> list() {
-		return smallGroupRepository.findByOrderByName();
+	@Override
+	public Page<SmallGroup> list(Pageable pageable) {
+		return smallGroupRepository.findAllByDeleteYNOrderBySmallGroupName(pageable);
 	}
-
+	@Override
 	public void save(SmallGroup smallGroup) {
 		smallGroupRepository.save(smallGroup);
 	}
-	
+	@Override
 	public SmallGroup get(Long id) {
 		return smallGroupRepository.findOne(id);
+	}
+	@Override
+	public void delete(Long id) {
+		SmallGroup smallGroup = smallGroupRepository.findOne(id);
+		smallGroup.setDelete_YN('Y');
+		save(smallGroup);
 	}
 }

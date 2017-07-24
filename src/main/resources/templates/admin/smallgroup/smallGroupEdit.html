@@ -10,7 +10,7 @@
 		<div layout:fragment="content">
 	<div id="insideDiv" >
 	
-		<h2>Create New Small Group</h2>
+		<h2>Edit Small Group</h2>
 		<br/>
 
 		<form class="form-horizontal" th:object="${smallGroup}" th:action="@{/admin/smallgroup/save}" method="post">
@@ -24,7 +24,7 @@
 			</div>
 				  	
 			<button type="submit" class="btn btn-primary pull-right">Submit</button>
-			<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/smallgroup/list}">Back To List</a></button>
+			<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" style="color:white;" th:href="@{/admin/smallgroup/list/}">Back to List</a></button>
 		</form>
 		
 		<br/><br/><br/>

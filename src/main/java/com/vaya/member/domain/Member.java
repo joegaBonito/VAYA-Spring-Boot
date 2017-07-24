@@ -11,8 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 import com.vaya.postAccounting.domain.PostAccounting;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
@@ -33,20 +37,17 @@ public class Member {
 	private String name;
 	
 	@NotNull(message="Email is Required")
-	@Column(name="email")
+	@Column(name="email",unique=true)
+	@Email
 	@Size(min = 1, max = 100)
-	//@Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$")
 	private String email;
 	
 	@NotNull(message="Password is Required")
 	@Column(name="password")
 	private String password;
 	
-	@NotNull(message="Confirming Password is Required")
-	@Column(name="confirm_password")
 	private String confirmPassword;
 
-	@NotNull(message="Role is Required")
 	@Column(name="role")
 	private String role; 
 	
@@ -66,24 +67,28 @@ public class Member {
 	@ManyToOne
 	@JoinColumn(name="small_group_id")
 	private SmallGroup smallGroup; 
+	
+	@Column(name="delete_YN")
+	private char delete_YN;
 
 	public Member() {}
 
 	public Member(Long memberId, String name, String email, String password, String confirmPassword, String role,
 			Set<PostAccounting> postAccounting, Set<PostSmallGroup> postSmallGroup, Set<PostTeam> postTeam, Team team,
-			SmallGroup smallGroup) {
+			SmallGroup smallGroup,char delete_YN) {
 		super();
 		this.memberId = memberId;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.confirmPassword = confirmPassword;
+		this.confirmPassword =confirmPassword;
 		this.role = role;
 		this.postAccounting = postAccounting;
 		this.postSmallGroup = postSmallGroup;
 		this.postTeam = postTeam;
 		this.team = team;
 		this.smallGroup = smallGroup;
+		this.delete_YN = delete_YN;
 	}
 
 	public Long getMemberId() {
@@ -172,5 +177,13 @@ public class Member {
 
 	public void setSmallGroup(SmallGroup smallGroup) {
 		this.smallGroup = smallGroup;
+	}
+
+	public char getDelete_YN() {
+		return delete_YN;
+	}
+
+	public void setDelete_YN(char delete_YN) {
+		this.delete_YN = delete_YN;
 	}
 }

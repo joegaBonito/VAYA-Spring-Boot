@@ -7,8 +7,8 @@
 	th:href="@{/css/postsmallgroups/view.css}" />
 </head>
 <body>
-
-	<div id="insideDiv" layout:fragment="content">
+<div layout:fragment="content">
+	<div id="insideDiv" >
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
@@ -17,7 +17,7 @@
 					<li class="breadcrumb-item active" th:text="${post.title}"></li>
 				</ol>
 
-				<article>
+				<article style="margin: 0.2rem; padding: 2rem; border: 2px solid #eceeef; width:1000px">
 					<header>
 						<h2 style="text-decoration: underline;" th:text="${post.title}">title</h2>
 						Posted By:&nbsp;<a th:href="|mailto:${post.member.email}|"><span th:text="|${post.member.name}|">member</span></a><br/>
@@ -51,6 +51,6 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </body>
 </html>

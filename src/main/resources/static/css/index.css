@@ -3,13 +3,27 @@
 	color:#141823;
 }
 
-#insideDiv {
-	background-color:white; 
-	padding-left:2rem;
-	padding-bottom:2rem;
-}
-
 #introduction > p {
 	color:#141823;
 	font-size:1rem;
+}
+
+.carousel-img {
+/* 	width:100%; height: auto; */
+} 
+
+.carousel-inner {
+	/* background-color:#f7f7f7;
+    max-width: 100%;
+	height:600px;
+	position:relative;
+	overflow:hidden; */
+	position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.welcome-index { 
+	background-color:white;
+	padding:20px 30px 15px;
 }

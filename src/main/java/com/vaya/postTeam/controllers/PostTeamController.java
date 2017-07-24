@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,16 +43,19 @@ public class PostTeamController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list") 
-	public String postList(Principal principal, Model model) {
+	public String postList(Principal principal, Model model,@PageableDefault(value=10) Pageable pageable ) {
 		/*
 		 * This method only allows the same small group members to see their posts.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.listWithoutPagination()) {
 			if(member.getEmail().equals(principal.getName())) {
 				model.addAttribute("OwnerTeam",member.getTeam());
+				Page<PostTeam> posts =  postTeamServiceImpl.list(member.getTeam().getTeamId(),pageable);
+				model.addAttribute("posts",posts);
 			}
 		}
-		model.addAttribute("posts",postTeamServiceImpl.list());
+
+		model.addAttribute("owner",principal.getName());
 		return "/postteams/list";
 	}
 	
@@ -76,7 +82,7 @@ public class PostTeamController {
 	}
 	
 	@RequestMapping(value ="/save", method = RequestMethod.POST )
-	public String postSave(Principal principal, @Valid PostTeam postTeam, BindingResult bindingResult, Model model) {				
+	public String postSave(Principal principal, @Valid PostTeam postTeam, BindingResult bindingResult, Model model,@PageableDefault(value=10) Pageable pageable) {				
 		/*if(bindingResult.hasErrors()){
 			model.addAttribute("post", postSmallGroup);
 			return "/postsmallgroups/postForm";
@@ -85,7 +91,7 @@ public class PostTeamController {
 		/*
 		 * This method sets the smallGroup id to the newly created postSmallGroup entity.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				postTeam.setTeam(member.getTeam());
 			}
@@ -103,19 +109,20 @@ public class PostTeamController {
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/delete/{id}")
-	public String postEdit(@PathVariable(value="id") Long id) {
+	public String postDelete(@PathVariable(value="id") Long id) {
 		postTeamServiceImpl.postDelete(id);
 		return "redirect:/postteams/list";
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
-	public String byAuthor(@PathVariable(value="id") Long id, Model model, Principal principal){
-		model.addAttribute("posts", postTeamServiceImpl.listByMember(id));
+	public String byAuthor(@PathVariable(value="id") Long id, Model model, Principal principal, @PageableDefault(value=10) Pageable pageable){
+		Page<PostTeam> posts =  postTeamServiceImpl.listByMember(id,pageable);
+		model.addAttribute("posts", posts);
 		/*
 		 * This method only allows the same small group members to see their posts.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				model.addAttribute("OwnerTeam",member.getTeam());
 			}

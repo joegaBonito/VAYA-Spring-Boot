@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,16 +42,19 @@ public class PostSmallGroupController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list") 
-	public String postList(Principal principal, Model model) {
+	public String postList(Principal principal, Model model, @PageableDefault(value=11) Pageable pageable) {
 		/*
 		 * This method only allows the same small group members to see their posts.
 		 */
-		for(Member member: memberService.list()) {
+		
+		for(Member member: memberService.listWithoutPagination()) {
 			if(member.getEmail().equals(principal.getName())) {
-				model.addAttribute("OwnerSmallGroup",member.getSmallGroup());
+				Page<PostSmallGroup> posts =  postSmallGroupServiceImpl.list(member.getSmallGroup().getId(),pageable);
+				System.out.println(posts.getSize());
+				model.addAttribute("posts",posts);
 			}
 		}
-		model.addAttribute("posts",postSmallGroupServiceImpl.list());
+		model.addAttribute("owner",principal.getName());
 		return "/postsmallgroups/list";
 	}
 	
@@ -70,11 +76,11 @@ public class PostSmallGroupController {
 	public String postEdit(@Valid @ModelAttribute("postSmallGroup") PostSmallGroup postSmallGroup, 
 							Principal principal,
 							 Model model,
-							 BindingResult bindingResult){
+							 BindingResult bindingResult,@PageableDefault(value=10) Pageable pageable){
 		/*
 		 * This method sets the smallGroup id to the edited postSmallGroup entity.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				postSmallGroup.setSmallGroup(member.getSmallGroup());
 			}
@@ -84,7 +90,7 @@ public class PostSmallGroupController {
 	}
 	
 	@RequestMapping(value ="/save", method = RequestMethod.POST )
-	public String postSave(Principal principal, @Valid PostSmallGroup postSmallGroup, BindingResult bindingResult, Model model) {				
+	public String postSave(Principal principal, @Valid PostSmallGroup postSmallGroup, BindingResult bindingResult, Model model,@PageableDefault(value=10) Pageable pageable) {				
 		/*if(bindingResult.hasErrors()){
 			model.addAttribute("post", postSmallGroup);
 			return "/postsmallgroups/postForm";
@@ -93,7 +99,7 @@ public class PostSmallGroupController {
 		/*
 		 * This method sets the smallGroup id to the newly created postSmallGroup entity.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				postSmallGroup.setSmallGroup(member.getSmallGroup());
 			}
@@ -118,16 +124,17 @@ public class PostSmallGroupController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
-	public String byAuthor(@PathVariable(value="id") Long id, Model model,Principal principal){
+	public String byAuthor(@PathVariable(value="id") Long id, Model model,Principal principal,@PageableDefault(value=10) Pageable pageable){
 		/*
 		 * This method only allows the same small group members to see their posts.
 		 */
-		for(Member member: memberService.list()) {
+		for(Member member: memberService.list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				model.addAttribute("OwnerSmallGroup",member.getSmallGroup());
 			}
 		}
-		model.addAttribute("posts", postSmallGroupServiceImpl.listByMember(id));
+		Page<PostSmallGroup> posts = postSmallGroupServiceImpl.listByMember(id,pageable);
+		model.addAttribute("posts", posts);
 		return "/postsmallgroups/list";
 	}
 	

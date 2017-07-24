@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +40,8 @@ public class AdminMembersController{
 	}
 	
 	@RequestMapping("/admin/members")
-	public String list(Model model) {
-		model.addAttribute("members", memberService.list());
+	public String list(Model model,  @PageableDefault(value=10) Pageable pageable) {
+		model.addAttribute("members", memberService.list(pageable));
 		return "admin/members/list";
 	}
 	
@@ -51,12 +53,12 @@ public class AdminMembersController{
 	
 	// create | save
 	@RequestMapping("/admin/member/create")
-	public String create(Model model) {
+	public String create(Model model, @PageableDefault(value=10) Pageable pageable) {
 		model.addAttribute("member", new Member());
-		model.addAttribute("members", memberService.list());
+		model.addAttribute("members", memberService.list(pageable));
 		model.addAttribute("roles", memberService.roles());
-		model.addAttribute("teams", teamServiceImpl.teamList());
-		model.addAttribute("smallGroups", smallGroupServiceImpl.list());
+		model.addAttribute("NoSmallGroup",smallGroupServiceImpl.get((long) 1).getId());
+		model.addAttribute("NoTeam",teamServiceImpl.get((long) 1).getTeamId());
 		return "admin/members/memberForm";
 	}
 	@RequestMapping(value = "/admin/members/save", method = RequestMethod.POST )
@@ -70,11 +72,11 @@ public class AdminMembersController{
 	}
 	
 	@RequestMapping("/admin/members/edit/{id}")
-	public String edit(@PathVariable Long id, Model model){
+	public String edit(@PathVariable Long id, Model model,Pageable pageable){
 		model.addAttribute("member",memberService.get(id));
 		model.addAttribute("roles", memberService.roles());
-		model.addAttribute("teams", teamServiceImpl.teamList());
-		model.addAttribute("smallGroups", smallGroupServiceImpl.list());
+		model.addAttribute("teams", teamServiceImpl.teamList(pageable));
+		model.addAttribute("smallGroups", smallGroupServiceImpl.list(pageable));
 		return "admin/members/memberEdit";		
 	}
 	

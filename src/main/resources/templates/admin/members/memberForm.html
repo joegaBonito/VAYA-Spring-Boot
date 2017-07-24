@@ -7,8 +7,8 @@
 	th:href="@{/css/admin/members/memberForm.css}" />
 </head>
 <body>
-
-	<div id="insideDiv" layout:fragment="content">
+<div layout:fragment="content">
+	<div id="insideDiv" >
 
 		<h2>Create New Member</h2>
 		<br />
@@ -76,11 +76,18 @@
 					</div>
 				</div>
 			</div>
+			<!-- Default Input for Small Group and Team -->
+						<select style="display:none"  class=" form-control" th:field="*{smallGroup}">
+							<option th:value="${NoSmallGroup}" class="default">Small Group</option>
+						</select>
+						<select style="display:none" class=" form-control" th:field="*{team}">
+							<option th:value="${NoTeam}" class="default">Team</option>
+						</select>
 			<button type="submit" class="btn btn-primary pull-right">Submit</button>
 		</form>
 
 		<br /> <br /> <br />
-
+</div>
 	</div>
 
 </body>

@@ -19,7 +19,7 @@
 	th:href="@{/css/main.css}" />
 </head>
 <body style="display: none">
-
+	
 	<div class="container">
 		<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 			<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -49,7 +49,7 @@
 							aria-labelledby="obs-nav-dropdown-menulink">
 							<a class="dropdown-item" href="/members/list">List</a>
 						</div></li>
-						<li class="nav-item dropdown" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})"><a
+						<!--  <li class="nav-item dropdown" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_MEMBER'})"><a
 						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						href="#" role="button">Reimbursement</a>
@@ -57,6 +57,7 @@
 							aria-labelledby="obs-nav-dropdown-menulink">
 							<a class="dropdown-item" href="/postaccountings/list">List</a>
 						</div></li>
+						-->
 					<li class="nav-item dropdown"
 						sec:authorize="hasAnyRole({'ROLE_ADMIN'})"><a
 						class="nav-link dropdown-toggle" id="obs-nav-dropdown-menulink"
@@ -66,13 +67,14 @@
 							aria-labelledby="obs-nav-dropdown-menulink">
 							 <a
 								class="dropdown-item" href="/admin/members/">Member</a>
-								<a class="dropdown-item" href="/admin/postaccountings/">Reimbursement</a> <a
-								class="dropdown-item" href="/admin/team/list">Team</a>
+								<!--<a class="dropdown-item" href="/admin/postaccountings/">Reimbursement</a> -->
 								<a
-								class="dropdown-item" href="/admin/smallgroup/list">Small Group</a> <a
-								class="dropdown-item" href="/admin/accountings/">Accounting</a>
+								class="dropdown-item" href="/admin/smallgroup/list">Small Group</a> 
+								<a
+								class="dropdown-item" href="/admin/team/list">Team</a>
+								<!--<a	class="dropdown-item" href="/admin/accountings/">Accounting</a>  -->
 						</div></li>
-						<li class="nav-item"><a class="nav-link" href="/gallery">Album</a></li>
+						<li class="nav-item"><a class="nav-link" href="/album">Album</a></li>
 						<li class="nav-item"><a class="nav-link" href="/">About Us</a></li>
 				</ul>
 				<div class="navbar-text navbar-right" style="white-space: nowrap;">
@@ -92,19 +94,20 @@
 				</div>
 			</div>
 		</nav>
-		<div style="margin: 5px 0px 5px 0px;" layout:fragment="content"></div>
-		<div class="col-lg-12 footer">
-			<div class="col-lg-12 footer">
-				<p>
+		</div>
+		<div class="container" layout:fragment="content"></div>
+		
+		<div class="container" id="footer">
+	<footer class="footer">
+      
+        <span class="text-muted">
 					Email: vayaarumdaunkm@gmail.com <br /> Address: 1 Arumdaun St
 					Bethpage, New York, NY 11714 <br /> Copyright: © 2017 VAYA Web Team -
 					All rights reserved<br />
-				</p>
-			</div>
-		</div>
-
-
-	</div>
+		</span>
+      
+    </footer>
+    </div>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
@@ -118,6 +121,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
 		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
 		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
 	<script type="text/javascript" src="/js/index.js"></script>
 	<script type="text/javascript" src="/js/admin/postaccountings/postForm.js"></script>
 </body>

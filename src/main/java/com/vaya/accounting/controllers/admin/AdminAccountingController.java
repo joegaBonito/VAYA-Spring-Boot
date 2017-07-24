@@ -1,6 +1,7 @@
 package com.vaya.accounting.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,11 @@ public class AdminAccountingController {
 	private MeetingServiceImpl meetingServiceImpl;
 	private RetreatServiceImpl retreatServiceImpl;
 	
+	public AdminAccountingController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Autowired
 	public AdminAccountingController(AccountingServiceImpl accountingServiceImpl, 
 			                         TeamServiceImpl teamServiceImpl,
@@ -39,13 +45,13 @@ public class AdminAccountingController {
 	}
 	
 	@RequestMapping("/admin/accountings")
-	public String adminAccounting(Model model) {
-		accountingServiceImpl.getBalanceAfterTeamExpense();
+	public String adminAccounting(Model model,Pageable pageable) {
+		accountingServiceImpl.getBalanceAfterTeamExpense(pageable);
 		accountingServiceImpl.getBalanceAfterEtcExpense();
 		accountingServiceImpl.getBalanceAfterMeetingExpense();
 		accountingServiceImpl.getBalanceAfterRetreatExpense();
-		model.addAttribute("accountingTotalCurrentBudget",accountingServiceImpl.getTotalCurrentBudget());
-		model.addAttribute("teams", teamServiceImpl.teamList());
+		model.addAttribute("accountingTotalCurrentBudget",accountingServiceImpl.getTotalCurrentBudget(pageable));
+		model.addAttribute("teams", teamServiceImpl.teamList(pageable));
 		model.addAttribute("etcs", etcServiceImpl.etcList());
 		model.addAttribute("meetings",meetingServiceImpl.meetingList());
 		model.addAttribute("retreats",retreatServiceImpl.retreatList());

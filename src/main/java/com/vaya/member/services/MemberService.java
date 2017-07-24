@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +25,26 @@ public class MemberService {
 	}
 	
 
-	public Set<Member> list() {
-		return memberRepository.findAllByOrderByEmail();
+	public Page<Member> list(Pageable pageable) {
+		return memberRepository.findAllByDeleteYNOrderByEmail(pageable);
+	}
+	
+	public List<Member> listWithoutPagination() {
+		return memberRepository.findAllByDeleteYNOrderByEmail();
 	}
 
-	@Transactional
-	public Member save(Member member) {
+	public void create(Member member) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		//Controlling the role of the user
 		member.setRole("GUEST");
-		for(Member m : list()) {
-			if(member.getEmail().equals(m.getEmail())) {
-				throw new RuntimeException();
-			}
-		}
-		return memberRepository.save(member);
+		member.setDelete_YN('N');
+		save(member);
+	}
+	
+	public void save(Member member) {
+		memberRepository.save(member);
 	}
 
 
@@ -49,13 +54,15 @@ public class MemberService {
 
 
 	public void delete(Long id) {
-		memberRepository.delete(id);
+		Member member = memberRepository.findOne(id);
+		member.setDelete_YN('Y');
+		save(member);
 	}
 
 
-	public Member getMember(String userName) {
+	public Member getMember(String userName,Pageable pageable) {
 		Long tempId = (long) 0;
-		for(Member member : list()){
+		for(Member member : list(pageable)){
 			if(member.getEmail().equals(userName))
 				tempId = member.getMemberId();
 		}
@@ -73,8 +80,8 @@ public class MemberService {
 	public void editSave(Member member) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		member.setRole(member.getRole());
+		member.setDelete_YN('N');
 		memberRepository.save(member);
 	}
 
@@ -89,8 +96,8 @@ public class MemberService {
 	}
 
 
-	public Member editUserinfo(Principal principal) {
-		for(Member member : list()) {
+	public Member editUserinfo(Principal principal,Pageable pageable) {
+		for(Member member : list(pageable)) {
 			if(member.getEmail().equals(principal.getName())) {
 				return member;
 			}

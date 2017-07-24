@@ -48,20 +48,29 @@ public class Team {
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="team")
 	private List<Member> member;
 	
+	@Column(name="delete_YN") 
+	private char delete_YN;
+	
+	@Column(name="semester")
+	private String semester;
+	
 	public Team() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Team(Long teamId, String teamName, Accounting accounting, Set<PostAccounting> postAccounting, Master masterId, List<PostTeam> postTeam, List<Member> member) {
+	public Team(Long teamId, String teamName, Accounting accounting, Set<PostAccounting> postAccounting,
+			Master masterId, List<PostTeam> postTeam, List<Member> member, char delete_YN, String semester) {
 		super();
 		this.teamId = teamId;
 		this.teamName = teamName;
 		this.accounting = accounting;
 		this.postAccounting = postAccounting;
 		this.masterId = masterId;
-		this.postTeam =postTeam;
-		this.member =member;
+		this.postTeam = postTeam;
+		this.member = member;
+		this.delete_YN = delete_YN;
+		this.semester = semester;
 	}
 
 	public Long getTeamId() {
@@ -118,5 +127,21 @@ public class Team {
 
 	public void setMember(List<Member> member) {
 		this.member = member;
+	}
+
+	public char getDelete_YN() {
+		return delete_YN;
+	}
+
+	public void setDelete_YN(char delete_YN) {
+		this.delete_YN = delete_YN;
+	}
+
+	public String getSemester() {
+		return semester;
+	}
+
+	public void setSemester(String semester) {
+		this.semester = semester;
 	}
 }

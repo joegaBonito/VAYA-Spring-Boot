@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="gallery")
-public class Gallery {
+@Table(name="album")
+public class Album {
 
 	@Id
 	@GeneratedValue
@@ -17,12 +17,12 @@ public class Gallery {
 	@Column(name="file_data")
 	private  byte[] fileData;
 
-	public Gallery() {
+	public Album() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Gallery(Long id, byte[] fileData) {
+	public Album(Long id, byte[] fileData) {
 		super();
 		Id = id;
 		this.fileData = fileData;

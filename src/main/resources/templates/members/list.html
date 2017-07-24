@@ -7,31 +7,64 @@
 	<link rel="stylesheet" href="../static/css/members/list.css" th:href="@{/css/members/list.css}"/>
 </head>
 <body>
-		
-	<div id="insideDiv" layout:fragment="content">
+		<div layout:fragment="content">
+	<div id="insideDiv" >
+	<div class="row">
+				<div class="col-lg-8">
+					<h1 class="page-header">
+						VAYA <small>Member List</small>
+					</h1>
+				</div>
+			</div>
+			<hr />
 	<div class="table-responsive">
     	<table class="table table-striped">
 			<thead> 
 				<tr> 
-					<th>#</th> 
+			   <!-- <th>#</th> -->
 					<th>Name</th> 
 					<th>Email</th> 
-					<th>Small Group Posts By Member</th>
-					<th>Team Posts By Member</th>
+					<th>Small Group</th>
+					<th>Team</th>
 				</tr> 
 			</thead>
 			<tbody>
 				<tr th:each="member, iterationStatus : ${members}">
-					<td th:text="${iterationStatus.count}">1</td>
+					<!-- <td th:text="${iterationStatus.count}">1</td> -->
 					<td th:text="${member.name}">Name</td>
 					<td th:text="${member.email}">Email Address</td>
-					<td><a th:href="|/postsmallgroups/byMember/${member.memberId}|">Posts By Member</a></td>
-					<td><a th:href="|/postteams/byMember/${member.memberId}|">Posts By Member</a></td>
+					<td th:text="${member.smallGroup.name}">Small Group</td>
+					<td th:text="${member.team.teamName}">Team</td>
 				</tr>
 			</tbody>
 		</table>
 		</div>
+		<div class="row  pagination-css ">
+			<div class="col-lg-8">
+			<nav class="Page navigation table-pagination" th:if="${members?.totalPages}">
+						<ul id="pagination" class="pagination pagination-sm">
+							<li th:class="${members.number == 0} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link"  th:if="${!members.first}"
+								th:href="@{${'/members/list'}(page=${members.number-1},size=${members.size})}">&larr;
+									Previous</a> 
+							    <a class="page-link" th:if="${members.first}" href="javascript:void(0);" >&larr; Previous</a>
+							</li>
+
+							<li	th:each="pageNo : ${#numbers.sequence(0, members.totalPages - 1)}"
+								th:class="${members.number == pageNo} ? 'page-item active' : 'page-item'">
+							<a class="page-link" th:if="${members.number == pageNo}" href="javascript:void(0);" th:text="${pageNo + 1}"></a> 
+							<a class="page-link" th:if="${!(members.number == pageNo)}" th:href="@{${'/members/list'}(page=${pageNo},size=${members.size})}" th:text="${pageNo + 1}"></a>
+							</li>
+							<li th:class="${members.number + 1 >= members.totalPages} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:if="${!members.last}" th:href="@{${'/members/list'}(page=${members.number+1},size=${members.size})}">Next
+									&rarr;</a> 
+								<a class="page-link" th:if="${members.last}" href="javascript:void(0);">Next &rarr;</a>
+							</li>
+						</ul>
+					</nav>
+					</div>
+					</div>
 	</div>
-		
+		</div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.vaya.accounting.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vaya.accounting.domain.Accounting;
@@ -57,9 +58,9 @@ public class AccountingServiceImpl implements AccountingService{
 		accountingRepository.save(accounting);
 	}
 
-	public double getTotalCurrentBudget() {
+	public double getTotalCurrentBudget(Pageable pageable) {
 		double num = 0;
-		for(Team team : teamServiceImpl.teamList()){
+		for(Team team : teamServiceImpl.teamList(pageable)){
 			num += team.getAccounting().getCurrentBudget();
 		}
 		for(Etc etc : etcServiceImpl.etcList()){
@@ -74,8 +75,8 @@ public class AccountingServiceImpl implements AccountingService{
 		return num;
 	}
 	
-	public void getBalanceAfterTeamExpense(){
-		for(Team team : teamServiceImpl.teamList()) {
+	public void getBalanceAfterTeamExpense(Pageable pageable){
+		for(Team team : teamServiceImpl.teamList(pageable)) {
 			double num = 0;
 			for(PostAccounting post : postAccountingServiceImpl.list()) {
 				if(post.getTeam() == null) {

@@ -18,30 +18,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
-import com.vaya.general.services.impl.GalleryServiceImpl;
+import com.vaya.general.services.impl.AlbumServiceImpl;
 
 @Controller
-public class GalleryController {
+public class AlbumController {
 	
-	private GalleryServiceImpl galleryServiceImpl;
+	private AlbumServiceImpl albumServiceImpl;
 	
 	@Autowired
-	public GalleryController(GalleryServiceImpl galleryServiceImpl) {
-		this.galleryServiceImpl = galleryServiceImpl;	
+	public AlbumController(AlbumServiceImpl albumServiceImpl) {
+		this.albumServiceImpl = albumServiceImpl;	
 	}
 	
-	@RequestMapping("/gallery")
+	@RequestMapping("/album")
 	public String gallery(Model model){
-		model.addAttribute("pictures",galleryServiceImpl.getGalleryPictures());
-		return "/gallery/gallery";
+		model.addAttribute("pictures",albumServiceImpl.getPictures());
+		return "/album/album";
 	}
 	
 	/*
 	 * Displays image to web from the database blob.
 	 */
-	@RequestMapping(value = "/gallery/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	@RequestMapping(value = "/album/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws IOException {
-		byte[] imageContent = galleryServiceImpl.get(id).getFileData();
+		byte[] imageContent = albumServiceImpl.get(id).getFileData();
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);

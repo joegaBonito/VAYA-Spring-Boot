@@ -30,18 +30,27 @@ public class SmallGroup {
 	
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="smallGroup")
 	private List<Member> member;
+	
+	@Column(name="delete_YN") 
+	private char delete_YN;
+	
+	@Column(name="semester")
+	private String semester;
 
 	public SmallGroup() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SmallGroup(Long id, String name, List<PostSmallGroup> postSmallGroup,List<Member> member) {
+	public SmallGroup(Long id, String name, List<PostSmallGroup> postSmallGroup, List<Member> member, char delete_YN,
+			String semester) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.postSmallGroup = postSmallGroup;
 		this.member = member;
+		this.delete_YN = delete_YN;
+		this.semester = semester;
 	}
 
 	public Long getId() {
@@ -75,5 +84,20 @@ public class SmallGroup {
 	public void setMember(List<Member> member) {
 		this.member = member;
 	}
-	
+
+	public char getDelete_YN() {
+		return delete_YN;
+	}
+
+	public void setDelete_YN(char delete_YN) {
+		this.delete_YN = delete_YN;
+	}
+
+	public String getSemester() {
+		return semester;
+	}
+
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
 }

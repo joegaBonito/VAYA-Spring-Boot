@@ -7,11 +7,16 @@
 	<link rel="stylesheet" href="../static/css/admin/teams/list.css" th:href="@{/css/admin/teams/list.css}"/>
 </head>
 <body>
-		
-	<div id="insideDiv" layout:fragment="content">
-	
-		<h2>Teams</h2>
-		
+		<div layout:fragment="content">
+	<div id="insideDiv" >
+		<div class="row">
+				<div class="col-lg-8">
+					<h1 class="page-header">
+						VAYA <small>Admin Teams</small>
+					</h1>
+				</div>
+			</div>
+			<hr />
 		<div th:if="${message}" class="alert alert-success" role="alert">
 			<p th:text="${message}">success message</p>
 		</div>
@@ -20,26 +25,54 @@
 			<thead>
 				<tr>
 					<th>Team</th>
+					<th>Semester</th>
 					<th>Delete</th>
+					<th>Edit</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="team : ${teams}">
 					<td th:text="${team.teamName}">Team</td>
+					<td th:text="${team.semester}">Semester</td>
 					<td><a href="#" th:href="@{/admin/team/delete/} + ${team.teamId}">Delete</a></td>
+					<td><a href="#" th:href="@{/admin/team/edit/} + ${team.teamId}">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>
 		</div>
-		
+		<div class="row  pagination-css ">
+			<div class="col-lg-8">
+			<nav class="Page navigation table-pagination" th:if="${teams?.totalPages}">
+						<ul id="pagination" class="pagination pagination-sm">
+							<li th:class="${teams.number == 0} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link"  th:if="${!teams.first}"
+								th:href="@{${'/admin/team/list'}(page=${teams.number-1},size=${teams.size})}">&larr;
+									Previous</a> 
+							    <a class="page-link" th:if="${teams.first}" href="javascript:void(0);" >&larr; Previous</a>
+							</li>
+
+							<li	th:each="pageNo : ${#numbers.sequence(0, teams.totalPages - 1)}"
+								th:class="${teams.number == pageNo} ? 'page-item active' : 'page-item'">
+							<a class="page-link" th:if="${teams.number == pageNo}" href="javascript:void(0);" th:text="${pageNo + 1}"></a> 
+							<a class="page-link" th:if="${!(teams.number == pageNo)}" th:href="@{${'/admin/team/list'}(page=${pageNo},size=${teams.size})}" th:text="${pageNo + 1}"></a>
+							</li>
+							<li th:class="${teams.number + 1 >= teams.totalPages} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:if="${!teams.last}" th:href="@{${'/admin/team/list'}(page=${teams.number+1},size=${teams.size})}">Next
+									&rarr;</a> 
+								<a class="page-link" th:if="${teams.last}" href="javascript:void(0);">Next &rarr;</a>
+							</li>
+						</ul>
+					</nav>
+					</div>
+					</div>
 		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/team/create}">Add New team</a></button>
 		<br/><br/>
 		
-		<p th:if="${teams.size() == 0}">
+		<p th:if="${teams == null}">
 			<div class="alert alert-warning" role="alert">No Teams Found.</div>
 		</p>
 		
 	</div>
-		
+		</div>
 </body>
 </html>

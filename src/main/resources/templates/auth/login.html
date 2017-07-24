@@ -8,10 +8,11 @@
 	<link rel="stylesheet" href="../static/css/auth/login.css" th:href="@{/css/auth/login.css}"/>
 </head>
 <body>
-<div id="insideDiv" layout:fragment="content">
+<div layout:fragment="content">
+<div id="insideDiv" >
 <form name="f" th:action="@{/login}" method="post" class="form-horizontal">
   <fieldset>
-    <legend>Login Page</legend>
+    <h2>Please Sign In</h2>
     <div th:if="${param.error}" class="alert alert-danger">    
     	Invalid username and password.
     </div>
@@ -43,6 +44,7 @@
     </div>
     </fieldset>
     </form>
+    </div>
 </div>
 </body>
 </html>

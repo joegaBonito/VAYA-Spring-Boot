@@ -7,10 +7,10 @@
 	th:href="@{/css/members/memberForm.css}" />
 </head>
 <body>
+<div layout:fragment="content">
+	<div id="insideDiv" >
 
-	<div id="insideDiv" layout:fragment="content">
-
-		<h2>Create New Member</h2>
+		<h2>Member Information</h2>
 		<br />
 
 		<form class="form-horizontal" th:object="${member}"
@@ -70,6 +70,6 @@
 		<br /> <br /> <br />
 
 	</div>
-
+</div>
 </body>
 </html>

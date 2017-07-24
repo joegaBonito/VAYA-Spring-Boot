@@ -3,6 +3,8 @@ package com.vaya.postTeam.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vaya.postTeam.domain.PostTeam;
@@ -19,8 +21,8 @@ public class PostTeamServiceImpl implements PostTeamService {
 		this.postTeamRepository = postTeamRepository;
 	}
 	
-	public List<PostTeam> list() {
-		return postTeamRepository.findAllByDeleteYNorderbyDateDesc();
+	public Page<PostTeam> list(Long id, Pageable pageable) {
+		return postTeamRepository.findAllBySmallGroupIdOrderbyIdDescQuery(id, pageable);
 	}
 
 	public PostTeam get(Long id) {
@@ -38,7 +40,7 @@ public class PostTeamServiceImpl implements PostTeamService {
 		
 	}
 
-	public List<PostTeam> listByMember(Long id) {
-		return postTeamRepository.findAllByMemberMemberIdOrderByDateDescQuery(id);
+	public Page<PostTeam> listByMember(Long id, Pageable pageable) {
+		return postTeamRepository.findAllByMemberMemberIdOrderByIdDescQuery(id,pageable);
 	}
 }
