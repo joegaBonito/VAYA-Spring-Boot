@@ -42,7 +42,7 @@ public class PostSmallGroupController {
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/list") 
-	public String postList(Principal principal, Model model, @PageableDefault(value=11) Pageable pageable) {
+	public String postList(Principal principal, Model model, @PageableDefault(value=10) Pageable pageable) {
 		/*
 		 * This method only allows the same small group members to see their posts.
 		 */
@@ -52,6 +52,7 @@ public class PostSmallGroupController {
 				Page<PostSmallGroup> posts =  postSmallGroupServiceImpl.list(member.getSmallGroup().getId(),pageable);
 				System.out.println(posts.getSize());
 				model.addAttribute("posts",posts);
+				model.addAttribute("role",member.getRole());
 			}
 		}
 		model.addAttribute("owner",principal.getName());

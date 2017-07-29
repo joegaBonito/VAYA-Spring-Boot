@@ -30,13 +30,13 @@
 								th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member == null ? '': post.member.name}">date
 								member.name</p>
 							<button type="button" class="btn btn-primary pull-right"
-								th:if="${post.member == null ? '' : post.member.email == owner}">
+								th:if="${post?.member?.email == owner || role =='ADMIN'}">
 								<a class="button-txt-color"
 									style="color: white; padding-left: 0px;"
 									th:href="@{/postsmallgroups/edit/} + ${post.id}">Edit</a>
 							</button>
 							<button type="button" class="btn btn-primary pull-right"
-								th:if="${post.member == null ? '' : post.member.email == owner}">
+								th:if="${post?.member?.email == owner || role =='ADMIN'}">
 								<a class="button-txt-color"
 									style="color: white; padding-left: 0px;"
 									th:href="@{/postsmallgroups/delete/} + ${post.id}">Delete</a>

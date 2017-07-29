@@ -52,9 +52,9 @@ public class PostTeamController {
 				model.addAttribute("OwnerTeam",member.getTeam());
 				Page<PostTeam> posts =  postTeamServiceImpl.list(member.getTeam().getTeamId(),pageable);
 				model.addAttribute("posts",posts);
+				model.addAttribute("role",member.getRole());
 			}
 		}
-
 		model.addAttribute("owner",principal.getName());
 		return "/postteams/list";
 	}
