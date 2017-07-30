@@ -5,7 +5,7 @@
 	font-size: 1rem;
 }
 
-.breadcrumb{
+ .breadcrumb{
 	margin-top:-1.5rem;
 	margin-left:-4rem;
 	padding: .75rem 1rem;
@@ -13,7 +13,7 @@
     background-color: white;
     border-radius: .25rem;
 }
-
+ 
 label {
 	font-size: 1rem;
 	font-weight: bold;

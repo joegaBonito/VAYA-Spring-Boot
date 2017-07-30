@@ -22,22 +22,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import com.vaya.comment.domain.VayaComment;
+import com.vaya.comment.services.VayaCommentService;
+import com.vaya.general.domain.Role;
 import com.vaya.member.domain.Member;
 import com.vaya.member.services.MemberService;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
-import com.vaya.postSmallGroup.services.impl.PostSmallGroupServiceImpl;
+import com.vaya.postSmallGroup.services.PostSmallGroupService;
 
 @Controller
 @RequestMapping("/postsmallgroups")
 public class PostSmallGroupController {
 	
 	private MemberService memberService;
-	private PostSmallGroupServiceImpl postSmallGroupServiceImpl;
+	private PostSmallGroupService postSmallGroupService;
+	private VayaCommentService vayaCommentService;
 	
 	@Autowired
-	public PostSmallGroupController(PostSmallGroupServiceImpl postSmallGroupServiceImpl, MemberService memberService) {
-		this.postSmallGroupServiceImpl = postSmallGroupServiceImpl; 
+	public PostSmallGroupController(PostSmallGroupService postSmallGroupService, MemberService memberService,VayaCommentService vayaCommentService) {
+		this.postSmallGroupService = postSmallGroupService; 
 		this.memberService = memberService;
+		this.vayaCommentService = vayaCommentService;
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
@@ -49,8 +54,7 @@ public class PostSmallGroupController {
 		
 		for(Member member: memberService.listWithoutPagination()) {
 			if(member.getEmail().equals(principal.getName())) {
-				Page<PostSmallGroup> posts =  postSmallGroupServiceImpl.list(member.getSmallGroup().getId(),pageable);
-				System.out.println(posts.getSize());
+				Page<PostSmallGroup> posts =  postSmallGroupService.list(member.getSmallGroup().getId(),pageable);
 				model.addAttribute("posts",posts);
 				model.addAttribute("role",member.getRole());
 			}
@@ -60,8 +64,13 @@ public class PostSmallGroupController {
 	}
 	
 	@RequestMapping("/view/{id}")
-	public String postView(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("post",postSmallGroupServiceImpl.get(id));	
+	public String postView(@PathVariable("id") Long id, Model model, @PageableDefault(value=5) Pageable pageable,Principal principal) {
+		model.addAttribute("post",postSmallGroupService.get(id));	
+		model.addAttribute("comments", vayaCommentService.commentPostSmallGroupList(id,pageable));
+		model.addAttribute("comment", new VayaComment());
+		Member member = memberService.findByEmail(principal.getName());
+		model.addAttribute("role",member.getRole());
+		model.addAttribute("owner",principal.getName());
 		return "/postsmallgroups/view"; 
 	}
 	
@@ -105,22 +114,33 @@ public class PostSmallGroupController {
 				postSmallGroup.setSmallGroup(member.getSmallGroup());
 			}
 		}
-		postSmallGroupServiceImpl.postSave(postSmallGroup);
+		postSmallGroupService.postSave(postSmallGroup);
 		return "redirect:/postsmallgroups/view/" + postSmallGroup.getId();	
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/edit/{id}")
-	public String postEdit(@PathVariable(value="id") Long id, Model model) {
-		model.addAttribute("post",postSmallGroupServiceImpl.get(id));
-		return "/postsmallgroups/postForm";
+	public String postEdit(Principal principal, @PathVariable(value="id") Long id, Model model) {
+		Member member = memberService.findByEmail(principal.getName());
+		if(postSmallGroupService.get(id).getMember().getEmail().equals(principal.getName()) || member.getRole().equals("ADMIN")) {
+			model.addAttribute("post",postSmallGroupService.get(id));
+			return "/postsmallgroups/postForm";
+		}
+		else {
+			return "redirect:/postsmallgroups/list";
+		} 
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/delete/{id}")
-	public String postEdit(@PathVariable(value="id") Long id) {
-		postSmallGroupServiceImpl.postDelete(id);
-		return "redirect:/postsmallgroups/list";
+	public String postEdit(Principal principal, @PathVariable(value="id") Long id) {
+		Member member = memberService.findByEmail(principal.getName());
+		if(postSmallGroupService.get(id).getMember().getEmail().equals(principal.getName()) || member.getRole().equals("ADMIN")){
+			postSmallGroupService.postDelete(id);
+			return "redirect:/postsmallgroups/list";
+		} else {
+			return "redirect:/postsmallgroups/list";
+		}
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
@@ -134,7 +154,7 @@ public class PostSmallGroupController {
 				model.addAttribute("OwnerSmallGroup",member.getSmallGroup());
 			}
 		}
-		Page<PostSmallGroup> posts = postSmallGroupServiceImpl.listByMember(id,pageable);
+		Page<PostSmallGroup> posts = postSmallGroupService.listByMember(id,pageable);
 		model.addAttribute("posts", posts);
 		return "/postsmallgroups/list";
 	}

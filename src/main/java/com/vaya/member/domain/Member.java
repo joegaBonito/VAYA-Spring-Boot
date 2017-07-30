@@ -11,13 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
+import com.vaya.comment.domain.VayaComment;
 import com.vaya.postAccounting.domain.PostAccounting;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
 import com.vaya.postTeam.domain.PostTeam;
@@ -60,6 +59,9 @@ public class Member {
 	@OneToMany(cascade={CascadeType.ALL},mappedBy="member")
 	private Set<PostTeam> postTeam;
 	
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy="member")
+	private Set<VayaComment> vayaComment;
+	
 	@ManyToOne
 	@JoinColumn(name="team_id")
 	private Team team; 
@@ -74,7 +76,7 @@ public class Member {
 	public Member() {}
 
 	public Member(Long memberId, String name, String email, String password, String confirmPassword, String role,
-			Set<PostAccounting> postAccounting, Set<PostSmallGroup> postSmallGroup, Set<PostTeam> postTeam, Team team,
+			Set<PostAccounting> postAccounting, Set<PostSmallGroup> postSmallGroup, Set<PostTeam> postTeam, Set<VayaComment> vayaComment, Team team,
 			SmallGroup smallGroup,char delete_YN) {
 		super();
 		this.memberId = memberId;
@@ -86,6 +88,7 @@ public class Member {
 		this.postAccounting = postAccounting;
 		this.postSmallGroup = postSmallGroup;
 		this.postTeam = postTeam;
+		this.vayaComment = vayaComment;
 		this.team = team;
 		this.smallGroup = smallGroup;
 		this.delete_YN = delete_YN;
@@ -161,6 +164,14 @@ public class Member {
 
 	public void setPostTeam(Set<PostTeam> postTeam) {
 		this.postTeam = postTeam;
+	}
+
+	public Set<VayaComment> getComment() {
+		return vayaComment;
+	}
+
+	public void setComment(Set<VayaComment> vayaComment) {
+		this.vayaComment = vayaComment;
 	}
 
 	public Team getTeam() {

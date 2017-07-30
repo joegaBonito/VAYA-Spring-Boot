@@ -1,13 +1,16 @@
 package com.vaya.postTeam.domain;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.vaya.comment.domain.VayaComment;
 import com.vaya.member.domain.Member;
 import com.vaya.team.domain.Team;
 
@@ -55,10 +59,13 @@ public class PostTeam {
 	
 	@Column(name="delete_YN")
 	private char deleteYN;
+	
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy="postTeam")
+	private Set<VayaComment> vayaComment;
 
 	public PostTeam() {}
 	
-	public PostTeam(Long id, String title, Date date, Member member, byte[] fileData, String body,  Team team, char deleteYN) {
+	public PostTeam(Long id, String title, Date date, Member member, byte[] fileData, String body,  Team team, char deleteYN, Set<VayaComment> vayaComment) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -68,6 +75,7 @@ public class PostTeam {
 		this.body = body;
 		this.team = team;
 		this.deleteYN =deleteYN;
+		this.vayaComment = vayaComment;
 	}
 
 	public Long getId() {
@@ -130,5 +138,13 @@ public class PostTeam {
 	}
 	public void setDeleteYN(char deleteYN) {
 		this.deleteYN = deleteYN;
+	}
+
+	public Set<VayaComment> getComment() {
+		return vayaComment;
+	}
+
+	public void setComment(Set<VayaComment> vayaComment) {
+		this.vayaComment = vayaComment;
 	}
 }

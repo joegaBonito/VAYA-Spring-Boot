@@ -22,23 +22,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import com.vaya.comment.domain.VayaComment;
+import com.vaya.comment.services.VayaCommentService;
+import com.vaya.general.domain.Role;
 import com.vaya.member.domain.Member;
 import com.vaya.member.services.MemberService;
 import com.vaya.postSmallGroup.domain.PostSmallGroup;
 import com.vaya.postTeam.domain.PostTeam;
-import com.vaya.postTeam.services.impl.PostTeamServiceImpl;
+import com.vaya.postTeam.services.PostTeamService;
 
 @Controller
 @RequestMapping("/postteams")
 public class PostTeamController {
 	
 	private MemberService memberService;
-	private PostTeamServiceImpl postTeamServiceImpl;
+	private PostTeamService postTeamService;
+	private VayaCommentService vayaCommentService;
 	
 	@Autowired
-	public PostTeamController(PostTeamServiceImpl postTeamServiceImpl, MemberService memberService) {
-		this.postTeamServiceImpl = postTeamServiceImpl; 
+	public PostTeamController(PostTeamService postTeamService, MemberService memberService,VayaCommentService vayaCommentService) {
+		this.postTeamService = postTeamService; 
 		this.memberService = memberService;
+		this.vayaCommentService = vayaCommentService;
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
@@ -50,7 +55,7 @@ public class PostTeamController {
 		for(Member member: memberService.listWithoutPagination()) {
 			if(member.getEmail().equals(principal.getName())) {
 				model.addAttribute("OwnerTeam",member.getTeam());
-				Page<PostTeam> posts =  postTeamServiceImpl.list(member.getTeam().getTeamId(),pageable);
+				Page<PostTeam> posts =  postTeamService.list(member.getTeam().getTeamId(),pageable);
 				model.addAttribute("posts",posts);
 				model.addAttribute("role",member.getRole());
 			}
@@ -60,8 +65,13 @@ public class PostTeamController {
 	}
 	
 	@RequestMapping("/view/{id}")
-	public String postView(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("post",postTeamServiceImpl.get(id));	
+	public String postView(@PathVariable("id") Long id, Model model,@PageableDefault(value=5) Pageable pageable, Principal principal) {
+		model.addAttribute("post",postTeamService.get(id));	
+		model.addAttribute("comments",vayaCommentService.commentPostTeamList(id,pageable));
+		model.addAttribute("comment", new VayaComment());
+		Member member = memberService.findByEmail(principal.getName());
+		model.addAttribute("role",member.getRole());
+		model.addAttribute("owner",principal.getName());
 		return "/postteams/view"; 
 	}
 	
@@ -96,28 +106,39 @@ public class PostTeamController {
 				postTeam.setTeam(member.getTeam());
 			}
 		}
-		postTeamServiceImpl.postSave(postTeam);
+		postTeamService.postSave(postTeam);
 		return "redirect:/postteams/view/" + postTeam.getId();	
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/edit/{id}")
-	public String postEdit(@PathVariable(value="id") Long id, Model model) {
-		model.addAttribute("post",postTeamServiceImpl.get(id));
-		return "/postteams/postForm";
+	public String postEdit(Principal principal, @PathVariable(value="id") Long id, Model model) {
+		Member member = memberService.findByEmail(principal.getName());
+		if(postTeamService.get(id).getMember().getEmail().equals(principal.getName()) || member.getRole().equals("ADMIN")) {
+			model.addAttribute("post",postTeamService.get(id));
+			return "/postteams/postForm";
+		}
+		else {
+			return "redirect:/postteams/list";
+		}
 	}
 	
 	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/delete/{id}")
-	public String postDelete(@PathVariable(value="id") Long id) {
-		postTeamServiceImpl.postDelete(id);
-		return "redirect:/postteams/list";
+	public String postDelete(Principal principal, @PathVariable(value="id") Long id) {
+		Member member = memberService.findByEmail(principal.getName());
+		if(postTeamService.get(id).getMember().getEmail().equals(principal.getName()) || member.getRole().equals("ADMIN")) {
+			postTeamService.postDelete(id);
+			return "redirect:/postteams/list";
+		} else {
+			return "redirect:/postteams/list";
+		}
 	}
 	
 	@Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping("/byMember/{id}")
 	public String byAuthor(@PathVariable(value="id") Long id, Model model, Principal principal, @PageableDefault(value=10) Pageable pageable){
-		Page<PostTeam> posts =  postTeamServiceImpl.listByMember(id,pageable);
+		Page<PostTeam> posts =  postTeamService.listByMember(id,pageable);
 		model.addAttribute("posts", posts);
 		/*
 		 * This method only allows the same small group members to see their posts.

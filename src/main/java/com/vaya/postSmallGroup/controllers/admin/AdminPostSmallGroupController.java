@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
-import com.vaya.postSmallGroup.services.impl.PostSmallGroupServiceImpl;
+import com.vaya.postSmallGroup.services.PostSmallGroupService;
+
 
 @Controller
 public class AdminPostSmallGroupController {
 	
-	private PostSmallGroupServiceImpl postSmallGroupServiceImpl;
+	private PostSmallGroupService postSmallGroupService;
 	
 	@Autowired
-	public AdminPostSmallGroupController(PostSmallGroupServiceImpl postSmallGroupServiceImpl) {
-		this.postSmallGroupServiceImpl = postSmallGroupServiceImpl;
+	public AdminPostSmallGroupController(PostSmallGroupService postSmallGroupService) {
+		this.postSmallGroupService = postSmallGroupService;
 	}
 
 	
@@ -35,7 +36,7 @@ public class AdminPostSmallGroupController {
 	 */
 	@RequestMapping(value = "/postsmallgroups/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws IOException {
-		byte[] imageContent = postSmallGroupServiceImpl.get(id).getFileData();
+		byte[] imageContent = postSmallGroupService.get(id).getFileData();
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);

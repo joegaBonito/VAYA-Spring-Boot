@@ -1,13 +1,16 @@
 package com.vaya.postSmallGroup.domain;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.vaya.comment.domain.VayaComment;
 import com.vaya.member.domain.Member;
 import com.vaya.smallgroup.domain.SmallGroup;
 
@@ -55,10 +59,13 @@ public class PostSmallGroup {
 	
 	@Column(name="delete_YN")
 	private char deleteYN;
+	
+	@OneToMany(cascade={CascadeType.ALL}, mappedBy="postSmallGroup")
+	private Set<VayaComment> vayaComment;
 
 	public PostSmallGroup() {}
 	
-	public PostSmallGroup(Long id, String title, Date date, Member member, byte[] fileData, String body, SmallGroup smallGroup, char deleteYN) {
+	public PostSmallGroup(Long id, String title, Date date, Member member, byte[] fileData, String body, SmallGroup smallGroup, char deleteYN, Set<VayaComment> vayaComment) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -68,6 +75,7 @@ public class PostSmallGroup {
 		this.body = body;
 		this.smallGroup = smallGroup;
 		this.deleteYN = deleteYN;
+		this.vayaComment = vayaComment;
 	}
 
 	public Long getId() {
@@ -132,6 +140,14 @@ public class PostSmallGroup {
 
 	public void setDeleteYN(char deleteYN) {
 		this.deleteYN = deleteYN;
+	}
+
+	public Set<VayaComment> getComment() {
+		return vayaComment;
+	}
+
+	public void setComment(Set<VayaComment> vayaComment) {
+		this.vayaComment = vayaComment;
 	}
 }
 
