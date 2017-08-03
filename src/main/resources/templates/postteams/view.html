@@ -21,7 +21,7 @@
 					<header>
 						<h2 style="text-decoration: underline;" th:text="${post.title}">title</h2>
 						Posted By:&nbsp;<a th:href="|mailto:${post.member.email}|"><span th:text="|${post.member.name}|">member</span></a><br/>
-						<span th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm a')}">Date</span><br/>
+						<span th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')}">Date</span><br/>
 					</header>
 					<br/>
 					<section>
@@ -52,7 +52,7 @@
 							<div class="col-lg-10">
 								<p class="form-control-static" th:text="${c.body}">body</p>
 								<p class="each-article"
-								th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${c.member == null ? '': c.member.name}">date
+								th:text="${#calendars.format(c.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${c.member == null ? '': c.member.name}">date
 								member.name</p>
 								<button type="button" class="btn btn-primary pull-right"
 								th:if="${c?.member?.email == owner || role =='ADMIN'}">

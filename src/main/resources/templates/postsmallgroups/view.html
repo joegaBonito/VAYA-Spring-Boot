@@ -22,7 +22,7 @@
 							<h2 style="text-decoration: underline;" th:text="${post.title}">title</h2>
 							Posted By:&nbsp;<a th:href="|mailto:${post.member.email}|"><span
 								th:text="|${post.member.name}|">member</span></a><br /> <span
-								th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm a')}">Date</span><br />
+								th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')}">Date</span><br />
 						</header>
 						<br />
 						<section>
@@ -114,12 +114,10 @@
 								id="commentForm" th:object="${comment}" method="post">
 								<label class="col-lg-6 control-label">Leave a comment</label>
 								<div class="col-md-10">
-									<input type="hidden" th:field="*{id}" /> <input type="hidden"
-										th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-									<textarea th:field="*{body}" rows="4" cols="100" name="comment"
-										form="commentForm">Enter text here...</textarea>
-									<button class="btn btn-primary" type="submit">Add
-										comment</button>
+									<input type="hidden" th:field="*{id}" /> 
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+									<textarea th:field="*{body}" rows="4" cols="100" name="comment"	form="commentForm">Enter text here...</textarea>
+									<button class="btn btn-primary" type="submit">Add comment</button>
 								</div>
 							</form>
 						</div>

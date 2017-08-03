@@ -39,7 +39,7 @@ public class PostTeam {
 	
 	@Column(name="date")
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat (pattern="MM/dd/yyyy HH:mm")
+	@DateTimeFormat (pattern="MM/dd/yyyy hh:mm:ss a")
 	private Date date = new Date();
 	
 	@ManyToOne

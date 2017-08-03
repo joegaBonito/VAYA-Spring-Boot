@@ -35,7 +35,7 @@
 					class="required">*</span></label>
 				<div class="col-md-10">
 					<input type="text" class="form-control"
-						th:value="${#dates.format(#dates.createNow(), 'MM/dd/yyyy HH:mm')}"
+						th:value="${#dates.format(#dates.createNow(), 'MM/dd/yyyy hh:mm:ss a')}"
 						th:field="*{date}" /> <span
 						th:if="${#fields.hasErrors('date')}" th:errors="*{date}"
 						th:class="help-block">Date</span>

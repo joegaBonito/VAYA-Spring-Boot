@@ -30,7 +30,7 @@ public class VayaComment {
 	private String body;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat (pattern="MM/dd/yyyy HH:mm")
+	@DateTimeFormat (pattern="MM/dd/yyyy hh:mm:ss a")
 	@Column(name="date")
 	private Date date = new Date();
 	
