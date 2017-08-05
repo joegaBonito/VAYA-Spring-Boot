@@ -55,6 +55,11 @@ public class PostSmallGroupController {
 		for(Member member: memberService.listWithoutPagination()) {
 			if(member.getEmail().equals(principal.getName())) {
 				Page<PostSmallGroup> posts =  postSmallGroupService.list(member.getSmallGroup().getId(),pageable);
+				if(posts.getTotalElements()==0) {
+					final String errorMessagePostEmpty = "No Posts Found.";
+					model.addAttribute("errorMessagePostEmpty",errorMessagePostEmpty);
+				}
+				model.addAttribute("pageTitleName",member.getSmallGroup().getName());
 				model.addAttribute("posts",posts);
 				model.addAttribute("role",member.getRole());
 			}

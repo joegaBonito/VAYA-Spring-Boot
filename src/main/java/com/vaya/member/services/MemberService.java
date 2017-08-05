@@ -2,9 +2,6 @@ package com.vaya.member.services;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,14 +11,21 @@ import org.springframework.stereotype.Service;
 
 import com.vaya.member.domain.Member;
 import com.vaya.member.repositories.MemberRepository;
+import com.vaya.smallgroup.services.impl.SmallGroupServiceImpl;
+import com.vaya.team.services.impl.TeamServiceImpl;
 @Service
 public class MemberService {
 	
-	@Autowired
 	private MemberRepository memberRepository;
+	private SmallGroupServiceImpl smallGroupServiceImpl;
+	private TeamServiceImpl teamServiceImpl;
 	
-	public MemberService(MemberRepository memberRepository) {
+	
+	@Autowired
+	public MemberService(MemberRepository memberRepository, SmallGroupServiceImpl smallGroupServiceImpl, TeamServiceImpl teamServiceImpl) {
 		this.memberRepository = memberRepository;
+		this.smallGroupServiceImpl = smallGroupServiceImpl;
+		this.teamServiceImpl =teamServiceImpl;
 	}
 	
 
@@ -40,6 +44,8 @@ public class MemberService {
 		//Controlling the role of the user
 		member.setRole("GUEST");
 		member.setDelete_YN('N');
+		member.setSmallGroup(smallGroupServiceImpl.get((long) 1));
+		member.setTeam(teamServiceImpl.get((long) 1));
 		save(member);
 	}
 	
@@ -80,6 +86,7 @@ public class MemberService {
 	public void editSave(Member member) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+		member.setConfirmPassword(bCryptPasswordEncoder.encode(member.getConfirmPassword()));
 		member.setRole(member.getRole());
 		member.setDelete_YN('N');
 		memberRepository.save(member);

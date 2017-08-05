@@ -49,7 +49,9 @@
 			</tbody>
 		</table>
 		</div>
-			<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color"  th:href="@{/admin/postaccountings/create/}">Add New Post</a></button>
+		<a id="aHrefButton" class="button-txt-color" style="color: white; padding-left: 0px;"  th:href="@{/admin/postaccountings/create/}">
+			<button type="button" class="btn btn-primary pull-right">Add New Post</button>
+		</a>
 		<br/><br/>
 		
 		<p th:if="${posts.size() == 0}">

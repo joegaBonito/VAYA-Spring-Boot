@@ -56,6 +56,10 @@ public class PostTeamController {
 			if(member.getEmail().equals(principal.getName())) {
 				model.addAttribute("OwnerTeam",member.getTeam());
 				Page<PostTeam> posts =  postTeamService.list(member.getTeam().getTeamId(),pageable);
+				if(posts.getTotalElements()==0) {
+					final String errorMessagePostEmpty = "No Posts Found.";
+					model.addAttribute("errorMessagePostEmpty",errorMessagePostEmpty);
+				}
 				model.addAttribute("posts",posts);
 				model.addAttribute("role",member.getRole());
 			}

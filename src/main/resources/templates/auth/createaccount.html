@@ -14,10 +14,14 @@
 					class="form-horizontal" method="post">
 					<fieldset>
 						<div class="row">
-							<div class="col-lg-6">
-								<legend>Please Create Account</legend>
+							<div class="col-lg-8">
+								<h1 class="page-header">
+									VAYA <small>Create Account</small>
+								</h1>
 							</div>
 						</div>
+						<div th:if="${errorMessageEmail}" class="alert alert-danger">
+							The email already exists. Please try different email.</div>
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="form-group"
@@ -74,13 +78,6 @@
 								</div>
 							</div>
 						</div>
-						<!-- Default Input for Small Group and Team -->
-						<select style="display:none" class=" form-control" th:field="*{smallGroup}">
-							<option th:value="${NoSmallGroup}" class="default">Small Group</option>
-						</select>
-						<select style="display:none" class=" form-control" th:field="*{team}">
-							<option th:value="${NoTeam}" class="default">Team</option>
-						</select>
 						<div class="row">
 							<div class="col-sm-4 col-sm-offset-4">
 								<div class="form-group">

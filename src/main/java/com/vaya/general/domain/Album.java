@@ -12,7 +12,13 @@ public class Album {
 
 	@Id
 	@GeneratedValue
-	private Long Id;
+	private Long id;
+	
+	@Column(name="title")
+	private String title;
+	
+	@Column(name="description")
+	private String description;
 	
 	@Column(name="file_data")
 	private  byte[] fileData;
@@ -22,18 +28,19 @@ public class Album {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Album(Long id, byte[] fileData) {
-		super();
-		Id = id;
+	public Album(Long id,String title,String description, byte[] fileData) {
+		this.id = id;
+		this.title=title;
+		this.description = description;
 		this.fileData = fileData;
 	}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public byte[] getFileData() {
@@ -42,5 +49,21 @@ public class Album {
 
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

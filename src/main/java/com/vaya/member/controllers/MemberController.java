@@ -62,7 +62,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/members/processForm", method = RequestMethod.POST)
-	public String processForm(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model,@PageableDefault(value=10) Pageable pageable) {
+	public String processForm(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model,@PageableDefault Pageable pageable) {
 		if(bindingResult.hasErrors()) {
 			return "/auth/createaccount";
 		}
@@ -71,9 +71,12 @@ public class MemberController {
 		}
 		for(Member m : memberService.list(pageable)) {
 			if(member.getEmail().equals(m.getEmail())) {
+				final String errorMessageEmail = "errorMessageEmail";
+				model.addAttribute("errorMessageEmail",errorMessageEmail);
 				return "/auth/createaccount";
 			}
 		}
+		
 		memberService.create(member);
 		return "auth/login";
 	}

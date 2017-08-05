@@ -17,6 +17,9 @@
 				</div>
 			</div>
 			<hr />
+			<div th:if="${errorMessagePostEmpty}" th:text="${errorMessagePostEmpty}" class="alert alert-warning" role="alert">
+					${errorMessagePostEmpty}
+			</div>
 		<div class="row">
 			<div class="col-lg-12">
 				<div style="margin: 0.2rem; padding: .8rem; border: 2px solid #eceeef"
@@ -42,15 +45,10 @@
 			</div>
 		</div>
 		<br />
-		<p th:if="${posts == null}">
-		<div class="alert alert-warning" role="alert">No Posts Found.</div>
-		</p>
-
-		<button type="button" class="btn btn-primary pull-right"
-			sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
-			<a class="button-txt-color" style="color: white; padding-left: 0px;"
-				th:href="@{/postteams/create}">Add New Post</a>
-		</button>
+		
+		<a class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/postteams/create}" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+			<button type="button" class="btn btn-primary pull-right">Add New Post</button>
+		</a>
 		<br/>
 			<div class="row  pagination-css ">
 			<div class="col-lg-8">

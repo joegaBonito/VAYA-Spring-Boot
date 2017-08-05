@@ -63,9 +63,11 @@
 							</li>
 						</ul>
 					</nav>
-					</div>
-					</div>
-		<button type="button" class="btn btn-primary pull-right"><a id="aHrefButton" class="button-txt-color" th:href="@{/admin/smallgroup/create}">Add New Small Group</a></button>
+				</div>
+			</div>
+		<a id="aHrefButton" class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/admin/smallgroup/create}">
+			<button type="button" class="btn btn-primary pull-right">Add New Small Group</button>
+		</a>
 		<br/><br/>
 		
 		<p th:if="${smallGroups==null}">
