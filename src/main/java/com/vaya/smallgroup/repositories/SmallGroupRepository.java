@@ -15,6 +15,6 @@ public interface SmallGroupRepository extends CrudRepository<SmallGroup, Long> {
 
 	List<SmallGroup> findByOrderByName();
 
-	@Query("SELECT sg FROM SmallGroup sg WHERE sg.delete_YN = 'N' ORDER BY sg.name")
-	Page<SmallGroup> findAllByDeleteYNOrderBySmallGroupName(Pageable pageable);
+	@Query("SELECT sg FROM SmallGroup sg WHERE sg.delete_YN = 'N' ORDER BY sg.id")
+	Page<SmallGroup> findAllByDeleteYNOrderBySmallGroupId(Pageable pageable);
 }

@@ -15,6 +15,6 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
 	List<Team> findByOrderByTeamName();
 	
-	@Query("SELECT a FROM Team a WHERE a.delete_YN = 'N' ORDER BY a.teamName")
+	@Query("SELECT a FROM Team a WHERE a.delete_YN = 'N' ORDER BY a.teamId")
 	Page<Team> findAllByDeleteYNOrderByTeamQuery(Pageable pageable);
 }

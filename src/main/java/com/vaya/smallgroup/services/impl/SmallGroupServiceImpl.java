@@ -20,7 +20,7 @@ public class SmallGroupServiceImpl implements SmallGroupService {
 	}
 	@Override
 	public Page<SmallGroup> list(Pageable pageable) {
-		return smallGroupRepository.findAllByDeleteYNOrderBySmallGroupName(pageable);
+		return smallGroupRepository.findAllByDeleteYNOrderBySmallGroupId(pageable);
 	}
 	@Override
 	public void save(SmallGroup smallGroup) {
