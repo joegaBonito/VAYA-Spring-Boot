@@ -11,3 +11,16 @@ p {
 .help-block {
 	color:red;
 }
+
+
+.korean-font-category {
+	font-family: Malgun Gothic,san-serif;
+	font-size:28px;
+	color:#666c70;
+	text-decoration: underline;
+}
+
+.korean-font-subcategory {
+	font-family: Malgun Gothic,san-serif;
+	font-size:18px;
+}
