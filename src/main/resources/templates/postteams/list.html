@@ -28,13 +28,13 @@
 						<a id="title" th:href="|@{/postteams/view/}${post.id}|" th:text="${post.title}"></a>
 						<p class="each-article"	th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member == null ? '': post.member.name}">date 
 							member.name</p>
-						<button type="button" class="btn btn-primary pull-right"
+						<button type="button" class="btn btn-primary"
 							th:if="${post?.member?.email == owner || role == 'ADMIN'}">
 							<a class="button-txt-color"
 								style="color: white; padding-left: 0px;"
 								th:href="@{/postteams/edit/} + ${post.id}">Edit</a>
 						</button>
-						<button type="button" class="btn btn-primary pull-right"
+						<button type="button" class="btn btn-primary"
 							th:if="${post?.member?.email == owner || role == 'ADMIN'}">
 							<a class="button-txt-color"
 								style="color: white; padding-left: 0px;"
@@ -47,7 +47,7 @@
 		<br />
 		
 		<a class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/postteams/create}" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
-			<button type="button" class="btn btn-primary pull-right">Add New Post</button>
+			<button type="button" class="btn btn-primary">Add New Post</button>
 		</a>
 		<br/>
 			<div class="row  pagination-css ">
@@ -56,9 +56,9 @@
 						<ul id="pagination" class="pagination pagination-sm">
 							<li th:class="${posts.number == 0} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link"  th:if="${!posts.first}"
-								th:href="@{${'/postteams/list'}(page=${posts.number-1},size=${posts.size})}">&larr;
+								th:href="@{${'/postteams/list'}(page=${posts.number-1},size=${posts.size})}">
 									Previous</a> 
-							    <a class="page-link" th:if="${posts.first}" href="javascript:void(0);" >&larr; Previous</a>
+							    <a class="page-link" th:if="${posts.first}" href="javascript:void(0);" >Previous</a>
 							</li>
 
 							<li	th:each="pageNo : ${#numbers.sequence(0, posts.totalPages - 1)}"
@@ -67,9 +67,8 @@
 							<a class="page-link" th:if="${!(posts.number == pageNo)}" th:href="@{${'/postteams/list'}(page=${pageNo},size=${posts.size})}" th:text="${pageNo + 1}"></a>
 							</li>
 							<li th:class="${posts.number + 1 >= posts.totalPages} ? 'page-item disabled' : 'page-item'">
-								<a class="page-link" th:if="${!posts.last}" th:href="@{${'/postteams/list'}(page=${posts.number+1},size=${posts.size})}">Next
-									&rarr;</a> 
-								<a class="page-link" th:if="${posts.last}" href="javascript:void(0);">Next &rarr;</a>
+								<a class="page-link" th:if="${!posts.last}" th:href="@{${'/postteams/list'}(page=${posts.number+1},size=${posts.size})}">Next</a> 
+								<a class="page-link" th:if="${posts.last}" href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>

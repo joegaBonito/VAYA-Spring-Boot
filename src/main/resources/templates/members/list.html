@@ -45,9 +45,8 @@
 						<ul id="pagination" class="pagination pagination-sm">
 							<li th:class="${members.number == 0} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link"  th:if="${!members.first}"
-								th:href="@{${'/members/list'}(page=${members.number-1},size=${members.size})}">&larr;
-									Previous</a> 
-							    <a class="page-link" th:if="${members.first}" href="javascript:void(0);" >&larr; Previous</a>
+								th:href="@{${'/members/list'}(page=${members.number-1},size=${members.size})}">Previous</a> 
+							    <a class="page-link" th:if="${members.first}" href="javascript:void(0);" >Previous</a>
 							</li>
 
 							<li	th:each="pageNo : ${#numbers.sequence(0, members.totalPages - 1)}"
@@ -56,9 +55,8 @@
 							<a class="page-link" th:if="${!(members.number == pageNo)}" th:href="@{${'/members/list'}(page=${pageNo},size=${members.size})}" th:text="${pageNo + 1}"></a>
 							</li>
 							<li th:class="${members.number + 1 >= members.totalPages} ? 'page-item disabled' : 'page-item'">
-								<a class="page-link" th:if="${!members.last}" th:href="@{${'/members/list'}(page=${members.number+1},size=${members.size})}">Next
-									&rarr;</a> 
-								<a class="page-link" th:if="${members.last}" href="javascript:void(0);">Next &rarr;</a>
+								<a class="page-link" th:if="${!members.last}" th:href="@{${'/members/list'}(page=${members.number+1},size=${members.size})}">Next</a> 
+								<a class="page-link" th:if="${members.last}" href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>

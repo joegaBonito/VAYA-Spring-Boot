@@ -42,7 +42,7 @@
 							</div>
 						</section>
 						<br />
-						<button type="button" class="btn btn-primary pull-right">
+						<button type="button" class="btn btn-primary">
 							<a style="color: white;" class="button-txt-color"
 								th:href="@{/postsmallgroups/list}">Back To Posts List</a>
 						</button>
@@ -56,13 +56,13 @@
 									<p class="each-article"
 										th:text="${#calendars.format(c.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${c.member == null ? '': c.member.name}">date
 										member.name</p>
-									<button type="button" class="btn btn-primary pull-right"
+									<button type="button" class="btn btn-primary"
 										th:if="${c?.member?.email == owner || role =='ADMIN'}">
 										<a class="button-txt-color"
 											style="color: white; padding-left: 0px;"
 											th:href="@{'/postsmallgroups/comment/edit/' + ${post.id} + '/' + ${c.id}}">Edit</a>
 									</button>
-									<button type="button" class="btn btn-primary pull-right"
+									<button type="button" class="btn btn-primary"
 										th:if="${c?.member?.email == owner || role =='ADMIN'}">
 										<a class="button-txt-color"
 											style="color: white; padding-left: 0px;"

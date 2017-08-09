@@ -54,9 +54,9 @@
 						<ul id="pagination" class="pagination pagination-sm">
 							<li th:class="${members.number == 0} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link"  th:if="${!members.first}"
-								th:href="@{${'/admin/members'}(page=${members.number-1},size=${members.size})}">&larr;
+								th:href="@{${'/admin/members'}(page=${members.number-1},size=${members.size})}">
 									Previous</a> 
-							    <a class="page-link" th:if="${members.first}" href="javascript:void(0);" >&larr; Previous</a>
+							    <a class="page-link" th:if="${members.first}" href="javascript:void(0);" >Previous</a>
 							</li>
 
 							<li	th:each="pageNo : ${#numbers.sequence(0, members.totalPages - 1)}"
@@ -66,8 +66,8 @@
 							</li>
 							<li th:class="${members.number + 1 >= members.totalPages} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link" th:if="${!members.last}" th:href="@{${'/admin/members'}(page=${members.number+1},size=${members.size})}">Next
-									&rarr;</a> 
-								<a class="page-link" th:if="${members.last}" href="javascript:void(0);">Next &rarr;</a>
+									</a> 
+								<a class="page-link" th:if="${members.last}" href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>
@@ -75,7 +75,7 @@
 					</div>
 		<br/>
 		<a class="button-txt-color" style="color: white; padding-left: 0px;" href="/admin/member/create" th:href="@{/admin/member/create}">
-			<button type="button" class="btn btn-primary pull-right">Create New Member</button>
+			<button type="button" class="btn btn-primary">Create New Member</button>
 		</a>
 		<br/><br/><br/>
 	</div>

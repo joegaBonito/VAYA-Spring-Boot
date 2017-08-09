@@ -46,9 +46,9 @@
 						<ul id="pagination" class="pagination pagination-sm">
 							<li th:class="${teams.number == 0} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link"  th:if="${!teams.first}"
-								th:href="@{${'/admin/team/list'}(page=${teams.number-1},size=${teams.size})}">&larr;
+								th:href="@{${'/admin/team/list'}(page=${teams.number-1},size=${teams.size})}">
 									Previous</a> 
-							    <a class="page-link" th:if="${teams.first}" href="javascript:void(0);" >&larr; Previous</a>
+							    <a class="page-link" th:if="${teams.first}" href="javascript:void(0);" >Previous</a>
 							</li>
 
 							<li	th:each="pageNo : ${#numbers.sequence(0, teams.totalPages - 1)}"
@@ -58,15 +58,15 @@
 							</li>
 							<li th:class="${teams.number + 1 >= teams.totalPages} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link" th:if="${!teams.last}" th:href="@{${'/admin/team/list'}(page=${teams.number+1},size=${teams.size})}">Next
-									&rarr;</a> 
-								<a class="page-link" th:if="${teams.last}" href="javascript:void(0);">Next &rarr;</a>
+									</a> 
+								<a class="page-link" th:if="${teams.last}" href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>
 					</div>
 					</div>
 		<a id="aHrefButton" class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/admin/team/create}">
-		<button type="button" class="btn btn-primary pull-right">Add New team</button></a>
+		<button type="button" class="btn btn-primary">Add New team</button></a>
 		<br/><br/>
 		
 		<p th:if="${teams == null}">

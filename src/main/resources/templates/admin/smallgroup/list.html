@@ -46,9 +46,8 @@
 						<ul id="pagination" class="pagination pagination-sm">
 							<li th:class="${smallGroups.number == 0} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link"  th:if="${!smallGroups.first}"
-								th:href="@{${'/admin/smallgroup/list'}(page=${smallGroups.number-1},size=${smallGroups.size})}">&larr;
-									Previous</a> 
-							    <a class="page-link" th:if="${smallGroups.first}" href="javascript:void(0);" >&larr; Previous</a>
+								th:href="@{${'/admin/smallgroup/list'}(page=${smallGroups.number-1},size=${smallGroups.size})}">Previous</a> 
+							    <a class="page-link" th:if="${smallGroups.first}" href="javascript:void(0);" >Previous</a>
 							</li>
 
 							<li	th:each="pageNo : ${#numbers.sequence(0, smallGroups.totalPages - 1)}"
@@ -58,15 +57,15 @@
 							</li>
 							<li th:class="${smallGroups.number + 1 >= smallGroups.totalPages} ? 'page-item disabled' : 'page-item'">
 								<a class="page-link" th:if="${!smallGroups.last}" th:href="@{${'/admin/smallgroup/list'}(page=${smallGroups.number+1},size=${smallGroups.size})}">Next
-									&rarr;</a> 
-								<a class="page-link" th:if="${smallGroups.last}" href="javascript:void(0);">Next &rarr;</a>
+									</a> 
+								<a class="page-link" th:if="${smallGroups.last}" href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>
 				</div>
 			</div>
 		<a id="aHrefButton" class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/admin/smallgroup/create}">
-			<button type="button" class="btn btn-primary pull-right">Add New Small Group</button>
+			<button type="button" class="btn btn-primary">Add New Small Group</button>
 		</a>
 		<br/><br/>
 		
