@@ -7,9 +7,9 @@
 	th:href="@{/css/postteams/list.css}" />
 </head>
 <body>
-<div layout:fragment="content">
-	<div id="insideDiv" >
-		<div class="row">
+	<div layout:fragment="content">
+		<div id="insideDiv">
+			<div class="row">
 				<div class="col-lg-8">
 					<h1 class="page-header">
 						VAYA <small>Team Posts</small>
@@ -17,66 +17,76 @@
 				</div>
 			</div>
 			<hr />
-			<div th:if="${errorMessagePostEmpty}" th:text="${errorMessagePostEmpty}" class="alert alert-warning" role="alert">
-					${errorMessagePostEmpty}
-			</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div style="margin: 0.2rem; padding: .8rem; border: 2px solid #eceeef"
-					th:each="post : ${posts}">
-					<header>
-						<a id="title" th:href="|@{/postteams/view/}${post.id}|" th:text="${post.title}"></a>
-						<p class="each-article"	th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member == null ? '': post.member.name}">date 
-							member.name</p>
-						<button type="button" class="btn btn-primary"
-							th:if="${post?.member?.email == owner || role == 'ADMIN'}">
+			<div th:if="${errorMessagePostEmpty}"
+				th:text="${errorMessagePostEmpty}" class="alert alert-warning"
+				role="alert">${errorMessagePostEmpty}</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div
+						style="margin: 0.2rem; padding: .8rem; border: 2px solid #eceeef"
+						th:each="post : ${posts}">
+						<header>
+							<a id="title" th:href="|@{/postteams/view/}${post.id}|"
+								th:text="${post.title}"></a>
+							<p class="each-article"
+								th:text="${#calendars.format(post.date,'MM/dd/yyyy hh:mm:ss a')} + ' by ' + ${post.member == null ? '': post.member.name}">date
+								member.name</p>
 							<a class="button-txt-color"
 								style="color: white; padding-left: 0px;"
-								th:href="@{/postteams/edit/} + ${post.id}">Edit</a>
-						</button>
-						<button type="button" class="btn btn-primary"
-							th:if="${post?.member?.email == owner || role == 'ADMIN'}">
-							<a class="button-txt-color"
+								th:href="@{/postteams/edit/} + ${post.id}"
+								th:if="${post?.member?.email == owner || role == 'ADMIN'}"><button
+									type="button" class="btn btn-primary">Edit</button></a> <a
+								class="button-txt-color"
 								style="color: white; padding-left: 0px;"
-								th:href="@{/postteams/delete/} + ${post.id}">Delete</a>
-						</button>
-					</header>
+								th:href="@{/postteams/delete/} + ${post.id}"
+								th:if="${post?.member?.email == owner || role == 'ADMIN'}"><button
+									type="button" class="btn btn-primary">Delete</button></a>
+
+						</header>
+					</div>
 				</div>
 			</div>
-		</div>
-		<br />
-		
-		<a class="button-txt-color" style="color: white; padding-left: 0px;" th:href="@{/postteams/create}" sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
-			<button type="button" class="btn btn-primary">Add New Post</button>
-		</a>
-		<br/>
+			<br /> <a class="button-txt-color"
+				style="color: white; padding-left: 0px;"
+				th:href="@{/postteams/create}"
+				sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
+				<button type="button" class="btn btn-primary">Add New Post</button>
+			</a> <br />
 			<div class="row  pagination-css ">
-			<div class="col-lg-8">
-			<nav class="Page navigation table-pagination" th:if="${posts?.totalPages}">
+				<div class="col-lg-8">
+					<nav class="Page navigation table-pagination"
+						th:if="${posts?.totalPages}">
 						<ul id="pagination" class="pagination pagination-sm">
-							<li th:class="${posts.number == 0} ? 'page-item disabled' : 'page-item'">
-								<a class="page-link"  th:if="${!posts.first}"
+							<li
+								th:class="${posts.number == 0} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:if="${!posts.first}"
 								th:href="@{${'/postteams/list'}(page=${posts.number-1},size=${posts.size})}">
-									Previous</a> 
-							    <a class="page-link" th:if="${posts.first}" href="javascript:void(0);" >Previous</a>
+									Previous</a> <a class="page-link" th:if="${posts.first}"
+								href="javascript:void(0);">Previous</a>
 							</li>
 
-							<li	th:each="pageNo : ${#numbers.sequence(0, posts.totalPages - 1)}"
+							<li
+								th:each="pageNo : ${#numbers.sequence(0, posts.totalPages - 1)}"
 								th:class="${posts.number == pageNo} ? 'page-item active' : 'page-item'">
-							<a class="page-link" th:if="${posts.number == pageNo}" href="javascript:void(0);" th:text="${pageNo + 1}"></a> 
-							<a class="page-link" th:if="${!(posts.number == pageNo)}" th:href="@{${'/postteams/list'}(page=${pageNo},size=${posts.size})}" th:text="${pageNo + 1}"></a>
+								<a class="page-link" th:if="${posts.number == pageNo}"
+								href="javascript:void(0);" th:text="${pageNo + 1}"></a> <a
+								class="page-link" th:if="${!(posts.number == pageNo)}"
+								th:href="@{${'/postteams/list'}(page=${pageNo},size=${posts.size})}"
+								th:text="${pageNo + 1}"></a>
 							</li>
-							<li th:class="${posts.number + 1 >= posts.totalPages} ? 'page-item disabled' : 'page-item'">
-								<a class="page-link" th:if="${!posts.last}" th:href="@{${'/postteams/list'}(page=${posts.number+1},size=${posts.size})}">Next</a> 
-								<a class="page-link" th:if="${posts.last}" href="javascript:void(0);">Next</a>
+							<li
+								th:class="${posts.number + 1 >= posts.totalPages} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:if="${!posts.last}"
+								th:href="@{${'/postteams/list'}(page=${posts.number+1},size=${posts.size})}">Next</a>
+								<a class="page-link" th:if="${posts.last}"
+								href="javascript:void(0);">Next</a>
 							</li>
 						</ul>
 					</nav>
-					</div>
-					</div>
-		<br />
-		<br />
+				</div>
+			</div>
+			<br /> <br />
+		</div>
 	</div>
-</div>
 </body>
 </html>

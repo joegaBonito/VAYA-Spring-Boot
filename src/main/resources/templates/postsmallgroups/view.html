@@ -17,7 +17,7 @@
 						<li class="breadcrumb-item active" th:text="${post?.title}"></li>
 					</ol>
 					<article
-						style="margin: 0.2rem; padding: 2rem; border: 2px solid #eceeef; width: 1000px">
+						style="margin: 0.2rem; padding: 2rem; border: 2px solid #eceeef; width: 100%">
 						<header>
 							<h2 style="text-decoration: underline;" th:text="${post.title}">title</h2>
 							Posted By:&nbsp;<a th:href="|mailto:${post.member.email}|"><span
@@ -36,7 +36,7 @@
 								sec:authorize="hasAnyRole({'ROLE_ADMIN','ROLE_USER'})">
 								<label class="col-sm-2 control-label">Attachment:</label>
 								<div class="col-md-10">
-									<img th:src="@{/postsmallgroups/image/}+${post.id}"
+									<img class="img-fluid" th:src="@{/postsmallgroups/image/}+${post.id}"
 										onerror="this.style.display='none'" height="500px" />
 								</div>
 							</div>
@@ -47,7 +47,7 @@
 								th:href="@{/postsmallgroups/list}">Back To Posts List</a>
 						</button>
 						<hr />
-						<label class="col-sm-2 control-label">Comments:</label>
+						<label class="col-lg-2 control-label">Comments:</label>
 						<div class="row">
 							<div class="form-group col-lg-8" th:each="c : ${comments}">
 
@@ -109,14 +109,15 @@
 							</div>
 						</div>
 						<div class="row">
-							<form class="col-lg-8"
+							<form class="form-group col-lg-8"
 								th:action="@{/postsmallgroups/comment/add/} + ${post.id}"
 								id="commentForm" th:object="${comment}" method="post">
 								<label class="col-lg-6 control-label">Leave a comment</label>
-								<div class="col-md-10">
+								<div class="col-lg-10">
 									<input type="hidden" th:field="*{id}" /> 
 									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-									<textarea th:field="*{body}" rows="4" cols="100" name="comment"	form="commentForm">Enter text here...</textarea>
+									<textarea class="form-control"  th:field="*{body}" rows="4" cols="100" name="comment" form="commentForm">Enter text here...</textarea>
+									<br/>
 									<button class="btn btn-primary" type="submit">Add comment</button>
 								</div>
 							</form>
