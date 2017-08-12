@@ -82,7 +82,6 @@
 						<label for="inputTeam" class="col-lg-2">Team</label>
 						<div class="col-lg-10">
 							<select th:field="*{team}" class="form-control" id="inputTeam">
-								<option th:value="null" th:text="None"></option>
 								<option th:each="team : ${teams}" th:value="${team.teamId}" th:text="${team.teamName}">role</option>
 							</select>
 							<span th:if="${#fields.hasErrors('team')}" th:errors="*{team}" th:class="help-block" style="color:red;font-size:20px;">Team Errors</span>
@@ -96,7 +95,6 @@
 						<label for="inputSmallGroup" class="col-lg-2">Small Group</label>
 						<div class="col-lg-10">
 							<select  th:field="*{smallGroup}" class="form-control" id="inputSmallGroup">
-								<option th:value="null" th:text="None"></option>
 								<option th:each="smallGroup : ${smallGroups}" th:value="${smallGroup.id}" th:text="${smallGroup.name}">Small Group</option>
 							</select>
 							<span th:if="${#fields.hasErrors('smallGroup')}" th:errors="*{smallGroup}" th:class="help-block" style="color:red;font-size:20px;">Small Group Errors</span>
