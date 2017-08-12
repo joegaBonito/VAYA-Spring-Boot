@@ -66,9 +66,7 @@ public class MemberController {
 		if(bindingResult.hasErrors()) {
 			return "/auth/createaccount";
 		}
-		if(!member.getPassword().equals(member.getConfirmPassword())) {
-			
-		}
+		
 		for(Member m : memberService.list(pageable)) {
 			if(member.getEmail().equals(m.getEmail())) {
 				final String errorMessageEmail = "errorMessageEmail";
@@ -76,7 +74,8 @@ public class MemberController {
 				return "/auth/createaccount";
 			}
 		}
-		
+		final String signUpSuccessMessage = "The sign up has been done successfully. You may login now.";
+		model.addAttribute("signUpSuccessMessage", signUpSuccessMessage);
 		memberService.create(member);
 		return "auth/login";
 	}

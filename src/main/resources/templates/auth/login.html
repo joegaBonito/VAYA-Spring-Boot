@@ -26,6 +26,8 @@
     <div th:if="${param.logout}" class="alert alert-success"> 
     	You have been logged out.
   	</div>
+  	<div th:if="${signUpSuccessMessage}" class="alert alert-success" th:text="${signUpSuccessMessage}"> 
+  	</div>
     <div class="row">
     <div class="form-group col-lg-6">
       <label for="username" class="col-lg-2 control-label">Email</label>
