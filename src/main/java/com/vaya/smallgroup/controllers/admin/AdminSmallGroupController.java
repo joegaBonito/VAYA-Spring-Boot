@@ -33,7 +33,9 @@ public class AdminSmallGroupController {
 	}
 	@RequestMapping("/admin/smallgroup/create") 
 	public String smallGroupCreate(Model model) {
-		model.addAttribute("smallGroup",new SmallGroup());
+		SmallGroup smallGroup = new SmallGroup();
+		smallGroup.setDelete_YN('N');
+		model.addAttribute("smallGroup",smallGroup);
 		return "/admin/smallgroup/smallGroupForm";
 	}
 	

@@ -15,6 +15,7 @@
 
 		<form class="form-horizontal" th:object="${smallGroup}" th:action="@{/admin/smallgroup/save}" method="post">
 			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{delete_YN}" />
 			<div th:class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
 				<label class="col-sm-2 control-label">Small Group Name<span class="required">*</span></label>
 				<div class="col-md-10">
